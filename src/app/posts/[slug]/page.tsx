@@ -1,28 +1,29 @@
-import { getPostData, getAllPostIds } from '@/lib/posts';
+import React from 'react';
+import { getPostData, getAllPostIds } from '../../../lib/posts';
 import { notFound } from 'next/navigation';
+
+interface PostProps {
+  params: Promise<{ slug: string }>;
+  searchParams?: Promise<{ [key: string]: string | string[] | undefined }>;
+}
 
 export async function generateStaticParams() {
   const paths = getAllPostIds();
-  return paths;
+  return paths.map((path) => ({ slug: path.slug }));
 }
 
-type Props = {
-  params: {
-    slug: string;
-  };
-};
-
-export default async function Post({ params }: Props) {
-  const postData = await getPostData(params.slug);
+export default async function Post({ params }: PostProps) {
+  const { slug } = await params;
+  const postData = await getPostData(slug);
 
   if (!postData) {
     notFound();
   }
 
   return (
-    <article className="prose prose-invert mx-auto py-8">
-      <h1 className="text-4xl font-bold">{postData.title}</h1>
-      <div className="text-gray-500 mb-8">
+    <article>
+      <h1>{postData.title}</h1>
+      <div>
         {postData.date}
       </div>
       <div dangerouslySetInnerHTML={{ __html: postData.contentHtml }} />
