@@ -6,7 +6,8 @@ export default function Home() {
 
   return (
     <main>
-      <h1>Seungwon's Blog</h1>
+      <h1>Seungwon&apos;s Blog</h1>
+        <a href="https://seungwon.me">Portfolio</a>
       <ul>
         {allPostsData.map(({ id, date, title }) => (
           <li key={id}>
