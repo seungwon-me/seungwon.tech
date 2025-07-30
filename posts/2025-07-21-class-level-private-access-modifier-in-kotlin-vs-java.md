@@ -1,5 +1,5 @@
 ---
-title: "Kotlin And Java private Access Modifier"
+title: "Class-Level private Access Modifier in Kotlin vs Java"
 date: '2025-07-21'
 ---
 
