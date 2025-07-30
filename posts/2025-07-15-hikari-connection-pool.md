@@ -48,9 +48,7 @@ public interface IConcurrentBagEntry {
 
 
 
-HikariCP가 Connection을 반환하는데는 ThreadLocal, ShardList, CAS 연산 ThreadLocal을 사용해 처리를 분산(락 존재 X)시키고 ShardList에 락을 걸지 않고 CAS(CompareAndSwap) 연산을 통해
-
-
+HikariCP가 Connection을 반환하는데는 ThreadLocal, ShardList, CAS 연산(lock-free) ThreadLocal을 사용해 처리를 분산시키고 ShardList에 CAS 연산으로 PoolEntry의 상태를 STATE_NOT_IN_USE에서 STATE_IN_USE로 바꾼다.
 
 ```java
 public class HikariDataSource {
@@ -93,10 +91,10 @@ public class HikariDataSource {
    }
 }
 ```
-더블 락킹 기법 volatile + synchronized
+애플리케이션 시작 시 pool을 생성하는 과정에서만 더블 락킹 기법 volatile + synchronized을 사용하고, 그 이후 커넥션을 주고받을 때에는 lock-free이다.
 
 
 ### HouseKeeper
-
+하우스키퍼는 HikariCP의 GC 같은 쓰레드로 커넥션의 생명주기를 관리한다.
 
 github: https://github.com/brettwooldridge/HikariCP
