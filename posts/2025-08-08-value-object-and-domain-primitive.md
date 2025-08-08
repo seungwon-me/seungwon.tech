@@ -1,6 +1,6 @@
 ---
 title: "Value Object and Domain Primitive"
-date: '2025-08-03'
+date: '2025-08-08'
 ---
 
 Value Object는 값들의 묶음이고 Domain Primitive는 하나의 값을 wrapping하여 도메인 규칙을 포함한 불변 값이다.
