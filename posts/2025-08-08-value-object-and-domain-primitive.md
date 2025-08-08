@@ -13,7 +13,7 @@ record User(
     Email email,
     Name name,
     Age age
-) {...}
+) {}
 
 // domain primitive
 record Age(
