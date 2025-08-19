@@ -24,7 +24,7 @@ CAP 정리와 매우 비슷하며, 도메인 모델링의 CAP 정리라고도 �
 
 * 접근법 1: Purity + Completeness
     ``` java
-    public class User : Entity {
+    class User {
         public Result ChangeEmail(string newEmail, User[] allUsers) {
             if (Company.IsEmailCorporate(newEmail) == false)
                 return Result.Failure("Incorrect email domain");
@@ -44,7 +44,7 @@ CAP 정리와 매우 비슷하며, 도메인 모델링의 CAP 정리라고도 �
 
 * 접근법 2: Completeness + Performance
     ``` java
-    public class User : Entity {
+    class User {
         public Result ChangeEmail(string newEmail, User[] allUsers) {
             if (Company.IsEmailCorporate(newEmail) == false)
                 return Result.Failure("Incorrect email domain");
@@ -65,7 +65,7 @@ CAP 정리와 매우 비슷하며, 도메인 모델링의 CAP 정리라고도 �
 * 접근법 3: Purity + Performance
     ```java
     // 도메인 모델
-    public class User : Entity {
+    class User {
         public Result changeEmail(string newEmail) {
             if (Company.IsEmailCorporate(newEmail) == false)
                 return Result.Failure();
@@ -76,7 +76,7 @@ CAP 정리와 매우 비슷하며, 도메인 모델링의 CAP 정리라고도 �
     }
     
     // 컨트롤러
-    public class UserController {
+    class UserController {
         public string changeEmail(int userId, string newEmail) {
             User existingUser = _userRepository.getByEmail(newEmail);
             if (existingUser != null && existingUser.id != userId)
