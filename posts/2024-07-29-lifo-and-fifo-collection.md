@@ -55,14 +55,14 @@ date: '2024-07-29'
     {
     ```
     
-    | Queue | Offer | Peak | Poll | Remove | Size | Structure |
-    | --- | --- | --- | --- | --- | --- | --- |
+    | Queue | Offer | Peak | Poll | Remove | Size | Structure   |
+    | --- | --- | --- | --- | --- | --- |-------------|
     | PriorityQueue | O(log n) | O(1) | O(log n) | O(n) | O(1) | Priority Heap |
-    | LinkedList | O(1) | O(1) | O(1) | O(1) | O(1) | Array |
-    | ArrayDeque | O(1) | O(1) | O(1) | O(n) | O(1) | Linked List |
+    | LinkedList | O(1) | O(1) | O(1) | O(1) | O(1) | Linked List |
+    | ArrayDeque | O(1) | O(1) | O(1) | O(n) | O(1) | Array |
     | ConcurrentLinkedQueue | O(1) | O(1) | O(1) | O(n) | O(n) | Linked List |
-    | ArrayBlockingQueue | O(1) | O(1) | O(1) | O(n) | O(1) | Array |
+    | ArrayBlockingQueue | O(1) | O(1) | O(1) | O(n) | O(1) | Array       |
     | PriorityBlockingQueue | O(log n) | O(1) | O(log n) | O(n) | O(1) | Priority Heap |
-    | SynchronousQueue | O(1) | O(1) | O(1) | O(n) | O(1) | None |
+    | SynchronousQueue | O(1) | O(1) | O(1) | O(n) | O(1) | None        |
     | DelayQueue | O(log n) | O(1) | O(log n) | O(n) | O(1) | Priority Heap |
     | LinkedBlockingQueue | O(1) | O(1) | O(1) | O(n) | O(1) | Linked List |

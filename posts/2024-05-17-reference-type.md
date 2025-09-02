@@ -70,8 +70,6 @@ String strongReference = weakReference.get();
 
 ## Phantom
 
-쓸모가 없다.
-
-해당 참조는 객체의 생명 주기를 결정하지 않는다. 
+해당 참조는 객체의 생명 주기를 결정하지 않는다.
 
 → GC가 해당 객체를 보기에 참조가 없는 것 처럼 보인다.
