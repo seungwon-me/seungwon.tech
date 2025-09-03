@@ -6,14 +6,13 @@ interface PostProps {
     params: {
         slug: string;
     };
+    searchParams: { [key: string]: string | string[] | undefined };
 }
 
 export async function generateStaticParams() {
     const postIds = getAllPostIds();
-
-    // Transform the data to match the expected format
     return postIds.map((post) => ({
-        slug: post.params.slug, // or just post.slug if getAllPostIds returns simple objects
+        slug: post.params.slug,
     }));
 }
 
