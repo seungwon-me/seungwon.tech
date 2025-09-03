@@ -1,5 +1,5 @@
 import React from 'react';
-import { getPostData, getAllPostIds } from '../../../lib/posts';
+import { getRetrospectiveData, getAllRetrospectiveIds } from '../../../lib/posts';
 import { notFound } from 'next/navigation';
 
 interface PostProps {
@@ -9,11 +9,11 @@ interface PostProps {
 }
 
 export async function generateStaticParams() {
-    const postIds = getAllPostIds();
+    const retrospectiveIds = getAllRetrospectiveIds();
 
     // Transform the data to match the expected format
-    return postIds.map((post) => ({
-        slug: post.params.slug, // or just post.slug if getAllPostIds returns simple objects
+    return retrospectiveIds.map((retrospective) => ({
+        slug: retrospective.params.slug, // Adjust based on your actual data structure
     }));
 }
 
@@ -21,7 +21,7 @@ export default async function Post({ params }: PostProps) {
     const { slug } = params;
 
     try {
-        const postData = await getPostData(slug);
+        const postData = await getRetrospectiveData(slug);
 
         return (
             <article>
