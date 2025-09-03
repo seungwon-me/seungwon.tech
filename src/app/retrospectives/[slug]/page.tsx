@@ -18,7 +18,7 @@ export async function generateStaticParams() {
 }
 
 export default async function Post({ params }: PostProps) {
-    const { slug } = params;
+    const { slug } = await params;
 
     try {
         const postData = await getRetrospectiveData(slug);
