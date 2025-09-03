@@ -2,7 +2,7 @@ import React from 'react';
 import { getPostData, getAllPostIds } from '../../../lib/posts';
 import { notFound } from 'next/navigation';
 
-interface PostProps {
+interface PageProps {
     params: {
         slug: string;
     };
@@ -16,7 +16,7 @@ export async function generateStaticParams() {
     }));
 }
 
-export default async function Post({ params }: PostProps) {
+export default async function Post({ params }: PageProps) {
     const { slug } = params;
 
     try {
