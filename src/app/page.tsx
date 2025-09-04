@@ -9,8 +9,7 @@ export default function Home() {
   return (
     <main>
       <h1>Seungwon&apos;s Blog</h1>
-      <p>궁금한 점은 <a href="https://www.linkedin.com/in/ori0o0p/">linkedin</a> 또는 <a href="mailto:hello@seungwon.me">hello@seungwon.me</a>으로 연락 주세요.<br/>
-          개인적(기술이 아닌 사람대사람)으로 궁금한 점이 아닌 이상, 여러분의 친구 gpt한테 찾아가시길.^^</p>
+      <p>궁금한 점, 지적할 점은 <a href="https://www.linkedin.com/in/ori0o0p/">linkedin</a> 또는 <a href="mailto:hello@seungwon.me">hello@seungwon.me</a>으로 연락 주세요.</p>
       <a href="https://seungwon.me">Portfolio</a>
 
       <div className="container">
