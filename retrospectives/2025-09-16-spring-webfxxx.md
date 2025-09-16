@@ -4,9 +4,9 @@ date: '2025-09-16'
 ---
 
 나는 Spring Webflux를 정말 열심히 공부했다. 
-그리고 나는 Spring Webflux가 싫다.
+그리고 나는 Spring Webflux가 싫다. 싫어하는 이유는 적지 않겠다.
 
-내가 Spring Webflux를 열심히 공부하면서 느꼈던 가장 큰 장점은
+그래도, 내가 Spring Webflux를 공부하면서 느꼈던 장점은
 
 - Mono, Flux와 같은 Publisher는 Monad라서 계산의 문맥을 타입으로 표현할 수 있는 게 제일 실용적이였다.
 
