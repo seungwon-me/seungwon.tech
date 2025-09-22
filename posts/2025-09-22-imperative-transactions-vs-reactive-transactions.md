@@ -1,5 +1,5 @@
 ---
-title: "Imperative transactions Vs. Reactive transactions"
+title: "Imperative Transactions Vs. Reactive Transactions"
 date: '2025-09-22'
 ---
 
@@ -12,8 +12,6 @@ date: '2025-09-22'
 반면, 반응형에서는 트랜잭션 상태가 subscriber context에 바인딩되고, **데이터가 스트리밍되며**`@Transactional` **메서드 경계 밖으로 흘러나갈 수 있다.**
 
 ---
-
-**imperative transactions Vs. reactive transactions**
 
 **Imperative Transactions**
 
