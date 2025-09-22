@@ -1,5 +1,5 @@
 ---
-title: "Reactive Relational Database Transactions"
+title: "Imperative transactions Vs. Reactive transactions"
 date: '2025-09-22'
 ---
 
