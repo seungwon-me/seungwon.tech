@@ -2,9 +2,10 @@ import { getAllPostIds, getPostData } from '@/lib/posts';
 import { notFound } from 'next/navigation';
 import type { Metadata } from 'next';
 
+// 1. searchParams의 타입도 Promise로 감싸줍니다.
 type PageProps = {
     params: Promise<{ id: string }>;
-    searchParams?: { [key: string]: string | string[] | undefined };
+    searchParams?: Promise<{ [key: string]: string | string[] | undefined }>;
 };
 
 export function generateStaticParams() {
@@ -24,7 +25,7 @@ export default async function Post({ params }: PageProps) {
 
     if (!id) {
         notFound();
-        return; // 제어 흐름 명확화
+        return;
     }
     const postData = await getPostData('posts', id);
 
