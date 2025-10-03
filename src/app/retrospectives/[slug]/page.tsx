@@ -1,12 +1,12 @@
 import React from 'react';
+// lib/posts에서 retrospective 전용 함수들을 가져온다고 가정합니다.
 import { getRetrospectiveData, getAllRetrospectiveIds } from '@/lib/posts';
 import { notFound } from 'next/navigation';
 
-// Next.js App Router의 올바른 타입 정의
+// 1. PostProps 타입을 Promise를 사용하도록 수정합니다.
 interface PostProps {
-    params: {
-        slug: string;
-    };
+    params: Promise<{ slug: string }>;
+    searchParams?: Promise<{ [key: string]: string | string[] | undefined }>;
 }
 
 // generateStaticParams의 반환 타입 정의
@@ -17,14 +17,16 @@ interface StaticParams {
 export async function generateStaticParams(): Promise<StaticParams[]> {
     const retrospectiveIds = getAllRetrospectiveIds();
 
-    // Transform the data to match the expected format
+    // 2. getAllRetrospectiveIds가 { id: string }[]을 반환한다고 가정하고,
+    //    올바른 데이터(retrospective.id)를 slug에 매핑합니다.
     return retrospectiveIds.map((retrospective) => ({
-        slug: retrospective.params.slug, // Adjust based on your actual data structure
+        slug: retrospective.id,
     }));
 }
 
 export default async function Post({ params }: PostProps) {
-    const { slug } = params;
+    // 3. await를 사용하여 params에서 slug 값을 추출합니다.
+    const { slug } = await params;
 
     try {
         const postData = await getRetrospectiveData(slug);
@@ -44,9 +46,9 @@ export default async function Post({ params }: PostProps) {
     }
 }
 
-// 메타데이터 생성 함수 (선택사항)
 export async function generateMetadata({ params }: PostProps) {
-    const { slug } = params;
+    // 3. await를 사용하여 params에서 slug 값을 추출합니다.
+    const { slug } = await params;
 
     try {
         const postData = await getRetrospectiveData(slug);
