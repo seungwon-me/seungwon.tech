@@ -1,0 +1,22 @@
+.nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 24px 0;
+  max-width: 70ch;
+  margin: 0 auto;
+}
+
+.nav a {
+  text-decoration: none;
+  color: var(--secondary-color);
+  transition: color 0.2s;
+}
+
+.nav a:hover {
+  color: var(--text-color);
+}
+
+.nav div:last-child a {
+  margin-left: 24px;
+}
