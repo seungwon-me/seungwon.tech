@@ -1,7 +1,8 @@
-"use client";
+'use client';
 
 import { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 
 type Post = {
   id: string;
@@ -18,7 +19,11 @@ interface SearchModalProps {
 
 export default function SearchModal({ isOpen, onClose, allPosts }: SearchModalProps) {
   const [searchTerm, setSearchTerm] = useState('');
+  const [selectedIndex, setSelectedIndex] = useState(-1);
   const modalRef = useRef<HTMLDivElement>(null);
+  const inputRef = useRef<HTMLInputElement>(null);
+  const resultsRef = useRef<HTMLUListElement>(null);
+  const router = useRouter();
 
   const [isInputFocused, setIsInputFocused] = useState(false);
 
@@ -30,7 +35,46 @@ export default function SearchModal({ isOpen, onClose, allPosts }: SearchModalPr
     : [];
 
   useEffect(() => {
-    const handleKeyDown = (event: KeyboardEvent) => {
+    if (isOpen) {
+      setSearchTerm('');
+      setSelectedIndex(-1);
+      setTimeout(() => inputRef.current?.focus(), 100);
+    }
+  }, [isOpen]);
+
+  const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    if (event.key === 'ArrowDown') {
+      event.preventDefault();
+      setSelectedIndex(prevIndex =>
+        prevIndex < filteredPosts.length - 1 ? prevIndex + 1 : 0
+      );
+    } else if (event.key === 'ArrowUp') {
+      event.preventDefault();
+      setSelectedIndex(prevIndex =>
+        prevIndex > 0 ? prevIndex - 1 : filteredPosts.length - 1
+      );
+    } else if (event.key === 'Enter' && selectedIndex >= 0) {
+      event.preventDefault();
+      const selectedPost = filteredPosts[selectedIndex];
+      if (selectedPost) {
+        router.push(`/${selectedPost.type}/${selectedPost.id}`);
+        onClose();
+      }
+    }
+  };
+
+  useEffect(() => {
+    if (selectedIndex >= 0 && resultsRef.current) {
+      const selectedItem = resultsRef.current.children[selectedIndex] as HTMLLIElement;
+      selectedItem?.scrollIntoView({
+        block: 'nearest',
+        behavior: 'smooth',
+      });
+    }
+  }, [selectedIndex]);
+
+  useEffect(() => {
+    const handleGlobalKeyDown = (event: KeyboardEvent) => {
       if (event.key === 'Escape') {
         onClose();
       }
@@ -43,12 +87,12 @@ export default function SearchModal({ isOpen, onClose, allPosts }: SearchModalPr
     };
 
     if (isOpen) {
-      document.addEventListener('keydown', handleKeyDown);
+      document.addEventListener('keydown', handleGlobalKeyDown);
       document.addEventListener('mousedown', handleClickOutside);
     }
 
     return () => {
-      document.removeEventListener('keydown', handleKeyDown);
+      document.removeEventListener('keydown', handleGlobalKeyDown);
       document.removeEventListener('mousedown', handleClickOutside);
     };
   }, [isOpen, onClose]);
@@ -105,19 +149,34 @@ export default function SearchModal({ isOpen, onClose, allPosts }: SearchModalPr
       <div ref={modalRef} style={modalStyle}>
         <h2>Search</h2>
         <input
+          ref={inputRef}
           type="text"
           placeholder="Search articles and retrospectives..."
           value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)}
+          onChange={(e) => {
+            setSearchTerm(e.target.value);
+            setSelectedIndex(-1);
+          }}
+          onKeyDown={handleKeyDown}
           style={inputStyle}
-          autoFocus
           onFocus={() => setIsInputFocused(true)}
           onBlur={() => setIsInputFocused(false)}
         />
-        <ul style={resultsListStyle}>
-          {filteredPosts.map(({ id, title, type }) => (
-            <li key={id} style={{ marginBottom: '10px' }}>
-              <Link href={`/${type}/${id}`} onClick={onClose} style={{ textDecoration: 'none', color: '#333' }}>
+        <ul ref={resultsRef} style={resultsListStyle}>
+          {filteredPosts.map(({ id, title, type }, index) => (
+            <li
+              key={id}
+              style={{
+                marginBottom: '10px',
+                padding: '8px',
+                borderRadius: '4px',
+                backgroundColor: index === selectedIndex ? '#f0f0f0' : 'transparent',
+                transition: 'background-color 0.15s ease-in-out',
+                cursor: 'pointer',
+              }}
+              onMouseEnter={() => setSelectedIndex(index)}
+            >
+              <Link href={`/${type}/${id}`} onClick={onClose} style={{ textDecoration: 'none', color: '#333', display: 'block' }}>
                 {title}
               </Link>
             </li>
