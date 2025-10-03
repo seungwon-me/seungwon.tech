@@ -38,11 +38,10 @@ export function getSortedPostsData(type: PostType, limit?: number) {
   return sortedPosts;
 }
 
-export function getAllPostIds(type: PostType) {
+export function getAllPostIds(type: PostType): { id: string }[] {
     const postsDirectory = getPostsDirectory(type);
     const fileNames = fs.readdirSync(postsDirectory);
 
-    // App Router generateStaticParams는 [{ id: string }] 형식 요구
     return fileNames.map((fileName) => ({
         id: fileName.replace(/\.md$/, ''),
     }));
