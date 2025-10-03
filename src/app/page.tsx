@@ -8,7 +8,7 @@ export default function Home() {
     <section>
       <h2>Seungwon.Blog</h2>
       <p className="lead">
-        Hello! I'm Seungwon. <br/> a Web Application Developer with Spring Boot, Java, Kotlin.
+        Hello! I&apos;m Seungwon. <br/> a Web Application Developer with Spring Boot, Java, Kotlin.
       </p>
 
       <h3>Latest</h3>
