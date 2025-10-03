@@ -42,13 +42,10 @@ export function getAllPostIds(type: PostType) {
     const postsDirectory = getPostsDirectory(type);
     const fileNames = fs.readdirSync(postsDirectory);
 
-    return fileNames.map((fileName) => {
-        return {
-            params: {
-                id: fileName.replace(/\.md$/, ''),
-            },
-        };
-    });
+    // App Router generateStaticParams는 [{ id: string }] 형식 요구
+    return fileNames.map((fileName) => ({
+        id: fileName.replace(/\.md$/, ''),
+    }));
 }
 
 
