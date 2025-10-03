@@ -3,12 +3,13 @@ import path from 'path';
 import matter from 'gray-matter';
 import { remark } from 'remark';
 import html from 'remark-html';
+import { cache } from 'react';
 
 type PostType = 'posts' | 'retrospectives';
 
 const getPostsDirectory = (type: PostType) => path.join(process.cwd(), type);
 
-export function getSortedPostsData(type: PostType, limit?: number) {
+export const getSortedPostsData = cache((type: PostType, limit?: number) => {
   const postsDirectory = getPostsDirectory(type);
   const fileNames = fs.readdirSync(postsDirectory);
   const allPostsData = fileNames.map((fileName) => {
@@ -36,19 +37,19 @@ export function getSortedPostsData(type: PostType, limit?: number) {
   }
 
   return sortedPosts;
-}
+});
 
-export function getAllPostIds(type: PostType): { id: string }[] {
+export const getAllPostIds = cache((type: PostType): { id: string }[] => {
     const postsDirectory = getPostsDirectory(type);
     const fileNames = fs.readdirSync(postsDirectory);
 
     return fileNames.map((fileName) => ({
         id: fileName.replace(/\.md$/, ''),
     }));
-}
+});
 
 
-export async function getPostData(type: PostType, id: string) {
+export const getPostData = cache(async (type: PostType, id: string) => {
   const postsDirectory = getPostsDirectory(type);
   const fullPath = path.join(postsDirectory, `${id}.md`);
   const fileContents = fs.readFileSync(fullPath, 'utf8');
@@ -65,4 +66,4 @@ export async function getPostData(type: PostType, id: string) {
     contentHtml,
     ...(matterResult.data as { title: string; date: string }),
   };
-}
+});
