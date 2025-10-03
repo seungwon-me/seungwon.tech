@@ -12,12 +12,12 @@
   --secondary-color: #555;
   --link-color: #0B5FFF;
   --focus-color: #DDD;
-  --heading-color: #A05200;
+  --heading-color: #df7500;
 }
 
 /* Base Styles */
 html {
-  font-family: var(--font-serif);
+  font-family: var(--font-serif), serif;
   background-color: var(--bg-color);
   color: var(--text-color);
 }
