@@ -47,7 +47,7 @@ export async function generateMetadata({ params }: PostProps) {
     const { slug } = await params;
 
     try {
-        const postData = await getRetrospectiveData(slug);
+        const postData = await getPostData('retrospectives', slug);
 
         return {
             title: postData.title,
