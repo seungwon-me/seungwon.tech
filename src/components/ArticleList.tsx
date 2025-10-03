@@ -13,7 +13,7 @@ export default function ArticleList({ allPostsData }: { allPostsData: Post[] }) 
   const [mode, setMode] = useState<'sorted' | 'group'>('sorted');
   const [key, setKey] = useState<'date' | 'title'>('date');
   const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('desc');
-  const [hoveredLetter, setHoveredLetter] = useState<string | null>(null);
+  const [hoveredItem, setHoveredItem] = useState<string | null>(null);
 
   const handleModeChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setMode(e.target.value as 'sorted' | 'group');
@@ -59,6 +59,7 @@ export default function ArticleList({ allPostsData }: { allPostsData: Post[] }) 
   }
 
   const alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split('');
+  const years = Object.keys(groupedPosts).sort((a, b) => sortOrder === 'asc' ? a.localeCompare(b) : b.localeCompare(a));
 
   const selectStyle: React.CSSProperties = {
     position: 'absolute',
@@ -72,10 +73,10 @@ export default function ArticleList({ allPostsData }: { allPostsData: Post[] }) 
     fontFamily: 'inherit',
   };
 
-  const getLetterStyle = (letter: string): React.CSSProperties => ({
-    marginRight: '5px',
+  const getLinkStyle = (item: string): React.CSSProperties => ({
+    marginRight: '10px',
     textDecoration: 'none',
-    color: hoveredLetter === letter ? '#000' : '#ccc',
+    color: hoveredItem === item ? '#000' : '#ccc',
     transition: 'color 0.2s',
   });
 
@@ -99,7 +100,7 @@ export default function ArticleList({ allPostsData }: { allPostsData: Post[] }) 
           </select>
         </span>
         <span onClick={toggleSortOrder} style={{ cursor: 'pointer', marginLeft: '10px' }}>
-          {sortOrder === 'asc' ? 'asc' : 'desc'}
+          {sortOrder}
         </span>
         .
       </p>
@@ -110,11 +111,27 @@ export default function ArticleList({ allPostsData }: { allPostsData: Post[] }) 
             <a
               key={letter}
               href={`#${letter}`}
-              style={getLetterStyle(letter)}
-              onMouseEnter={() => setHoveredLetter(letter)}
-              onMouseLeave={() => setHoveredLetter(null)}
+              style={getLinkStyle(letter)}
+              onMouseEnter={() => setHoveredItem(letter)}
+              onMouseLeave={() => setHoveredItem(null)}
             >
               {letter}
+            </a>
+          ))}
+        </div>
+      )}
+
+      {mode === 'group' && key === 'date' && (
+        <div style={{ marginBottom: '20px' }}>
+          {years.map(year => (
+            <a
+              key={year}
+              href={`#${year}`}
+              style={getLinkStyle(year)}
+              onMouseEnter={() => setHoveredItem(year)}
+              onMouseLeave={() => setHoveredItem(null)}
+            >
+              {year}
             </a>
           ))}
         </div>
@@ -135,9 +152,9 @@ export default function ArticleList({ allPostsData }: { allPostsData: Post[] }) 
       ) : (
         Object.entries(groupedPosts).sort((a, b) => {
           if (key === 'date') {
-            return b[0].localeCompare(a[0]);
+            return sortOrder === 'asc' ? a[0].localeCompare(b[0]) : b[0].localeCompare(a[0]);
           }
-          return a[0].localeCompare(b[0]);
+          return sortOrder === 'asc' ? a[0].localeCompare(b[0]) : b[0].localeCompare(a[0]);
         }).map(([group, posts]) => (
           <div key={group} id={group}>
             <h3>{group}</h3>
