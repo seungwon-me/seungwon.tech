@@ -1,5 +1,5 @@
-import { getAllPostIds, getPostData } from '@/lib/posts';
-import { notFound } from 'next/navigation';
+import {getAllPostIds, getPostData} from '@/lib/posts';
+import {notFound} from 'next/navigation';
 
 type PageProps = {
   params: { id: string };
@@ -7,18 +7,15 @@ type PageProps = {
 };
 
 export async function generateStaticParams() {
-  const posts = getAllPostIds('posts');
-  return posts.map((post) => ({
-    id: post.id,
-  }));
+    return getAllPostIds('posts');
 }
 
-export async function generateMetadata({ params }: PageProps) {
+export const generateMetadata = async ({ params }: PageProps) => {
   const postData = await getPostData('posts', params.id);
   return {
     title: postData.title,
   };
-}
+};
 
 export default async function Post({ params }: PageProps) {
   if (!params.id) {
