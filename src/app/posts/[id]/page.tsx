@@ -3,7 +3,7 @@ import { notFound } from 'next/navigation';
 import type { Metadata } from 'next';
 
 type PageProps = {
-    params: { id: string | string[] };
+    params: Promise<{ id: string }>;
     searchParams?: { [key: string]: string | string[] | undefined };
 };
 
@@ -12,7 +12,7 @@ export function generateStaticParams() {
 }
 
 export const generateMetadata = async ({ params }: PageProps): Promise<Metadata> => {
-    const id = Array.isArray(params.id) ? params.id[0] : params.id;
+    const { id } = await params;
     const postData = await getPostData('posts', id);
     return {
         title: postData.title,
@@ -20,7 +20,7 @@ export const generateMetadata = async ({ params }: PageProps): Promise<Metadata>
 };
 
 export default async function Post({ params }: PageProps) {
-    const id = Array.isArray(params.id) ? params.id[0] : params.id;
+    const { id } = await params;
 
     if (!id) {
         notFound();
