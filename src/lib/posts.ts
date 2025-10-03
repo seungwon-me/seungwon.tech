@@ -39,14 +39,18 @@ export function getSortedPostsData(type: PostType, limit?: number) {
 }
 
 export function getAllPostIds(type: PostType) {
-  const postsDirectory = getPostsDirectory(type);
-  const fileNames = fs.readdirSync(postsDirectory);
-  return fileNames.map((fileName) => {
-    return {
-      id: fileName.replace(/\.md$/, ''),
-    };
-  });
+    const postsDirectory = getPostsDirectory(type);
+    const fileNames = fs.readdirSync(postsDirectory);
+
+    return fileNames.map((fileName) => {
+        return {
+            params: {
+                id: fileName.replace(/\.md$/, ''),
+            },
+        };
+    });
 }
+
 
 export async function getPostData(type: PostType, id: string) {
   const postsDirectory = getPostsDirectory(type);
