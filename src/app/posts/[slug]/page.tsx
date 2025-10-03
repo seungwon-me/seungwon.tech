@@ -2,8 +2,6 @@ import React from 'react';
 import { getPostData, getAllPostIds } from '@/lib/posts';
 import { notFound } from 'next/navigation';
 
-// 1. 이전과 동일하게 Promise 타입을 적용합니다.
-// searchParams도 빌드 오류 방지를 위해 추가합니다.
 interface PageProps {
     params: Promise<{ slug: string }>;
     searchParams?: Promise<{ [key: string]: string | string[] | undefined }>;

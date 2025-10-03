@@ -1,6 +1,5 @@
 import React from 'react';
-// lib/posts에서 retrospective 전용 함수들을 가져온다고 가정합니다.
-import { getRetrospectiveData, getAllRetrospectiveIds } from '@/lib/posts';
+import { getAllPostIds, getPostData } from '@/lib/posts';
 import { notFound } from 'next/navigation';
 
 // 1. PostProps 타입을 Promise를 사용하도록 수정합니다.
@@ -15,12 +14,9 @@ interface StaticParams {
 }
 
 export async function generateStaticParams(): Promise<StaticParams[]> {
-    const retrospectiveIds = getAllRetrospectiveIds();
-
-    // 2. getAllRetrospectiveIds가 { id: string }[]을 반환한다고 가정하고,
-    //    올바른 데이터(retrospective.id)를 slug에 매핑합니다.
-    return retrospectiveIds.map((retrospective) => ({
-        slug: retrospective.id,
+    const posts = getAllPostIds('retrospectives');
+    return posts.map((post) => ({
+        slug: post.id,
     }));
 }
 
@@ -29,7 +25,7 @@ export default async function Post({ params }: PostProps) {
     const { slug } = await params;
 
     try {
-        const postData = await getRetrospectiveData(slug);
+        const postData = await getPostData('retrospectives', slug);
 
         return (
             <article>
