@@ -6,9 +6,8 @@ type PageProps = {
   searchParams?: { [key: string]: string | string[] | undefined };
 };
 
-export async function generateStaticParams() {
-    const posts = await getAllPostIds('posts');
-    return posts;
+export function generateStaticParams() {
+    return getAllPostIds('posts');
 }
 
 export const generateMetadata = async ({ params }: PageProps) => {
