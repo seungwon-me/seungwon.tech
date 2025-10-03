@@ -7,8 +7,9 @@ type PageProps = {
 };
 
 export async function generateStaticParams() {
-    return getAllPostIds('posts');
+    return await getAllPostIds('posts');
 }
+
 
 export const generateMetadata = async ({ params }: PageProps) => {
   const postData = await getPostData('posts', params.id);
