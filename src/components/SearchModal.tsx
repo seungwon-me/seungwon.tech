@@ -103,6 +103,7 @@ export default function SearchModal({ isOpen, onClose, allPosts }: SearchModalPr
     <>
       <div style={backdropStyle} />
       <div ref={modalRef} style={modalStyle}>
+        <h2>Search</h2>
         <input
           type="text"
           placeholder="Search articles and retrospectives..."
