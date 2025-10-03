@@ -1,6 +1,11 @@
 import { getAllPostIds, getPostData } from '@/lib/posts';
 import { notFound } from 'next/navigation';
 
+type PageProps = {
+  params: { id: string };
+  searchParams?: { [key: string]: string | string[] | undefined };
+};
+
 export async function generateStaticParams() {
   const posts = getAllPostIds('retrospectives');
   return posts.map((post) => ({
@@ -8,18 +13,18 @@ export async function generateStaticParams() {
   }));
 }
 
-export async function generateMetadata({ params: { id } }: { params: { id: string } }) {
-  const postData = await getPostData('retrospectives', id);
+export async function generateMetadata({ params }: PageProps) {
+  const postData = await getPostData('retrospectives', params.id);
   return {
     title: postData.title,
   };
 }
 
-export default async function RetrospectivePost({ params: { id } }: { params: { id: string } }) {
-  if (!id) {
+export default async function RetrospectivePost({ params }: PageProps) {
+  if (!params.id) {
     notFound();
   }
-  const postData = await getPostData('retrospectives', id);
+  const postData = await getPostData('retrospectives', params.id);
 
   return (
     <article>

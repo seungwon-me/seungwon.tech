@@ -2,9 +2,8 @@ import { getAllPostIds, getPostData } from '@/lib/posts';
 import { notFound } from 'next/navigation';
 
 type PageProps = {
-  params: {
-    id: string;
-  };
+  params: { id: string };
+  searchParams?: { [key: string]: string | string[] | undefined };
 };
 
 export async function generateStaticParams() {
