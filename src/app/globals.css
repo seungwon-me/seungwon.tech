@@ -127,3 +127,7 @@ article ol {
 article li {
   margin-bottom: 8px;
 }
+
+.links {
+    font-size: 1rem;
+}

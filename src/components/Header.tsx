@@ -18,7 +18,7 @@ export default function Header() {
             <Link href="/">Seungwon.tech</Link>
           )}
         </div>
-        <div style={{ fontSize: '1rem' }}>
+        <div className='links'>
           <Link href="https://seungwon.me">About me</Link>
           <Link href="/articles">Articles</Link>
           <Link href="/retrospectives">Retrospectives</Link>
