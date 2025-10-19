@@ -28,7 +28,9 @@ Information Hiding이 지켜지지 않은 것이다. 의료 지식과 상관 없
 이번에는 알약 두 개를 분해해서 나만의 약을 제조하려고 한다. 내가 알약을 처음 분해 해봤을 때, 알약 내부의 가루가 사방팔방으로 날라갔다.
 
 완전한 알약으로 내가 다시 만들 수 있을까? 거의 불가능하다. 부모님에게 혼났따.
-이게 바로 Encapsulation이 깨진 것이다. 정확하게는 `내가 알약을 분해했다.` 이 시점부터 Encapsulation가 깨진 것이다.
+이게 바로 Encapsulation이 깨진 것이다. 정확하게는 `내가 알약을 분해했다.` 이 시점부터 Encapsulation가 깨졌다는 걸 알 수 있다.
+
+Encapsulation이 되었다면, 알약은 분해 불가능한 상태여야한다.
 
 ### [요약]
 * Encapsulation은 완전한 객체를 만드는데 집중한다.
@@ -37,5 +39,3 @@ Information Hiding이 지켜지지 않은 것이다. 의료 지식과 상관 없
 ### [질문]
 * Q: 그러면 Information Hiding 없이 Encapsulation이 가능할까요? 
    * A: 투명한 알약과 같이 Information Hiding 없이 Encapsulation은 충분히 가능합니다. 하지만, Information Hiding 없는 Encapsulation은 어떨까 고민해야겠네요. 
-* Q: Abstraction은 Information Hiding과 관련이 있나요?
-   * A: Abstraction의 본질은 다형성입니다. Information Hiding과는 관련이 없습니다.
