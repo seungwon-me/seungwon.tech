@@ -22,7 +22,7 @@ Encapsulation에 대해 알아보면 `캡슐화`로 객체의 상태와 행동�
 
 이제는 알약 내부의 가루들을 내가 직접 관찰할 수 있다. 완전한 약이지만 달라진 것은 내부가 훤히 보인다는 것이다.
 
-Information Hiding이 지켜지지 않은 것이다. 의료 지식과 상관 없이, Information Hiding에서 정확하게 따지면 알약의 내부는 Hiding이 가능한 Information이다. 
+Information Hiding이 지켜지지 않은 것이다. 의료 지식과 상관 없이, 정확하게 따지면 알약의 내부는 Hiding이 가능한 Information이다. 
 알약 내부를 내가 관찰할 수 있다는 것은 Information Hiding이 깨진 것이다.
 
 이번에는 알약 두 개를 분해해서 나만의 약을 제조하려고 한다. 내가 알약을 처음 분해 해봤을 때, 알약 내부의 가루가 사방팔방으로 날라갔다.
