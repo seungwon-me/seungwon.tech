@@ -3,12 +3,6 @@ title: "Encapsulation And Information Hiding"
 date: '2025-10-19'
 ---
 
-대부분의 Encapsulation의 목표는 Information Hiding이다. 
-
-하지만, 모든 Encapsulation의 목표가 Information Hiding이라고 단정지을 수는 없다.
-
----
-
 Encapsulation에 대해 알아보면 `캡슐화`로 객체의 상태와 행동이 함께 encapsulate되어 완전한 객체로 동작한다는 것이다. 
 
 그러면 encapsulate되었다는 건 무엇일까? 내가 캡슐을 떠올렸을 때 바로 생각나는 것은 알약이다. 
