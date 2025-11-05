@@ -3,8 +3,9 @@ title: 'Spring WebFxxx'
 date: '2025-09-16'
 ---
 
-나는 Spring Webflux를 정말 열심히 공부했다. 
-그리고 나는 Spring Webflux가 싫다. 싫어하는 이유는 적지 않겠다.
+나는 Spring Webflux를 정말 열심히(나름대로?) 공부했다. 
+
+그리고 나는 Spring Webflux를 별로 좋아하지 않는다. 굳이 따지자면 싫어하는 쪽에 가깝다.
 
 그래도, 내가 Spring Webflux를 공부하면서 느꼈던 장점은
 
