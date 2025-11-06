@@ -25,15 +25,30 @@ export async function generateStaticParams(): Promise<StaticParams[]> {
 }
 
 export default async function Post({ params }: PageProps) {
-    // 4. await를 사용하여 params에서 slug를 추출합니다.
     const { slug } = await params;
 
     try {
-        // 5. getPostData 호출 시에도 'posts' 타입을 전달합니다.
         const postData = await getPostData('posts', slug);
+
+        const jsonLd = {
+            '@context': 'https://schema.org',
+            '@type': 'BlogPosting',
+            headline: postData.title,
+            datePublished: postData.date,
+            author: {
+                '@type': 'Person',
+                name: 'Seungwon',
+            },
+            description: postData.contentHtml.replace(/<[^>]*>?/gm, '').substring(0, 160),
+            image: `https://seungwon.tech/og-image.png`,
+        };
 
         return (
             <article>
+                <script
+                    type="application/ld+json"
+                    dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+                />
                 <h1>{postData.title}</h1>
                 <div>
                     {postData.date}
@@ -48,20 +63,35 @@ export default async function Post({ params }: PageProps) {
 }
 
 export async function generateMetadata({ params }: PageProps) {
-    // 4. await를 사용하여 params에서 slug를 추출합니다.
     const { slug } = await params;
 
     try {
-        // 5. getPostData 호출 시에도 'posts' 타입을 전달합니다.
         const postData = await getPostData('posts', slug);
+        const description = postData.contentHtml.replace(/<[^>]*>?/gm, '').substring(0, 160);
 
         return {
             title: postData.title,
-            description: `Read ${postData.title}`,
+            description: description,
+            openGraph: {
+                title: postData.title,
+                description: description,
+                type: 'article',
+                publishedTime: postData.date,
+                url: `https://seungwon.tech/posts/${slug}`,
+                images: [
+                    {
+                        url: `https://seungwon.tech/og-image.png`,
+                        width: 1200,
+                        height: 630,
+                        alt: postData.title,
+                    },
+                ],
+            },
         };
     } catch {
         return {
             title: 'Post Not Found',
+            description: 'This post could not be found.',
         };
     }
 }

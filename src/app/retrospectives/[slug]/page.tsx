@@ -21,14 +21,30 @@ export async function generateStaticParams(): Promise<StaticParams[]> {
 }
 
 export default async function Post({ params }: PostProps) {
-    // 3. await를 사용하여 params에서 slug 값을 추출합니다.
     const { slug } = await params;
 
     try {
         const postData = await getPostData('retrospectives', slug);
 
+        const jsonLd = {
+            '@context': 'https://schema.org',
+            '@type': 'BlogPosting',
+            headline: postData.title,
+            datePublished: postData.date,
+            author: {
+                '@type': 'Person',
+                name: 'Seungwon',
+            },
+            description: postData.contentHtml.replace(/<[^>]*>?/gm, '').substring(0, 160),
+            image: `https://seungwon.tech/og-image.png`,
+        };
+
         return (
             <article>
+                <script
+                    type="application/ld+json"
+                    dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+                />
                 <h1>{postData.title}</h1>
                 <div>
                     {postData.date}
@@ -43,19 +59,35 @@ export default async function Post({ params }: PostProps) {
 }
 
 export async function generateMetadata({ params }: PostProps) {
-    // 3. await를 사용하여 params에서 slug 값을 추출합니다.
     const { slug } = await params;
 
     try {
         const postData = await getPostData('retrospectives', slug);
+        const description = postData.contentHtml.replace(/<[^>]*>?/gm, '').substring(0, 160);
 
         return {
             title: postData.title,
-            description: `Read retrospective: ${postData.title}`,
+            description: description,
+            openGraph: {
+                title: postData.title,
+                description: description,
+                type: 'article',
+                publishedTime: postData.date,
+                url: `https://seungwon.tech/retrospectives/${slug}`,
+                images: [
+                    {
+                        url: `https://seungwon.tech/og-image.png`,
+                        width: 1200,
+                        height: 630,
+                        alt: postData.title,
+                    },
+                ],
+            },
         };
     } catch {
         return {
             title: 'Retrospective Not Found',
+            description: 'This retrospective could not be found.',
         };
     }
 }
