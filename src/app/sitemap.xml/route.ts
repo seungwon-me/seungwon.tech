@@ -2,7 +2,12 @@ import { getSortedPostsData } from '@/lib/posts';
 
 const URL = 'https://seungwon.tech';
 
-function generateSiteMap(posts: any[], retrospectives: any[]) {
+type Post = {
+    id: string;
+    date: string;
+};
+
+function generateSiteMap(posts: Post[], retrospectives: Post[]) {
   return `<?xml version="1.0" encoding="UTF-8"?>
    <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
      <!--We manually set the two URLs we know already-->
