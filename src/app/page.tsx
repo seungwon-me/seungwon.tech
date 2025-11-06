@@ -19,7 +19,7 @@ export default function Home() {
       <h3>Latest</h3>
       <ul>
         {allContent.map(({ id, date, title, type }) => (
-          <li key={id} style={{ listStyleType: 'none', listStyle: 'none', marginBottom: '1rem' }}>
+          <li key={id} style={{ listStyleType: 'none', listStyle: 'none', marginBottom: '0.5rem' }}>
             <Link href={`/${type}/${id}`} style={{ color: 'gray', textDecoration: 'none' }}>
               {title}
             </Link>
