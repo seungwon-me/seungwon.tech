@@ -11,7 +11,7 @@ export default function Articles() {
   return (
     <section>
       <h2>Articles</h2>
-      <ArticleList allPostsData={allPostsData} />
+      <ArticleList allPostsData={allPostsData} type="posts" />
     </section>
   );
 }

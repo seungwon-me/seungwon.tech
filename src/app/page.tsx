@@ -2,7 +2,12 @@ import Link from 'next/link';
 import { getSortedPostsData } from '@/lib/posts';
 
 export default function Home() {
-  const latestPosts = getSortedPostsData('posts', 5);
+  const latestPosts = getSortedPostsData('posts').map(p => ({ ...p, type: 'posts' }));
+  const latestRetrospectives = getSortedPostsData('retrospectives').map(r => ({ ...r, type: 'retrospectives' }));
+
+  const allContent = [...latestPosts, ...latestRetrospectives]
+    .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
+    .slice(0, 5);
 
   return (
     <section>
@@ -13,14 +18,15 @@ export default function Home() {
 
       <h3>Latest</h3>
       <ul>
-        {latestPosts.map(({ id, date, title }) => (
-          <li key={id} style= {{ listStyleType: 'none', listStyle: 'none' }}>
-            <Link href={`/posts/${id}`} style={{ color: 'gray', textDecoration: 'none' }}>
+        {allContent.map(({ id, date, title, type }) => (
+          <li key={id} style={{ listStyleType: 'none', listStyle: 'none', marginBottom: '1rem' }}>
+            <Link href={`/${type}/${id}`} style={{ color: 'gray', textDecoration: 'none' }}>
               {title}
             </Link>
             <br />
             <small className="meta">
               {date}
+              {type === 'retrospectives' && <span style={{ marginLeft: '0.5rem', padding: '0.2rem 0.4rem', backgroundColor: '#eee', borderRadius: '3px', fontSize: '0.7rem' }}>Retrospective</span>}
             </small>
           </li>
         ))}

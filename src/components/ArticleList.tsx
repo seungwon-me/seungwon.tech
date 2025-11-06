@@ -9,7 +9,7 @@ type Post = {
   date: string;
 };
 
-export default function ArticleList({ allPostsData }: { allPostsData: Post[] }) {
+export default function ArticleList({ allPostsData, type }: { allPostsData: Post[], type: 'posts' | 'retrospectives' }) {
   const [mode, setMode] = useState<'sorted' | 'group'>('sorted');
   const [key, setKey] = useState<'date' | 'title'>('date');
   const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('desc');
@@ -141,7 +141,7 @@ export default function ArticleList({ allPostsData }: { allPostsData: Post[] }) 
         <ul>
           {sortedPosts.map(({ id, date, title }) => (
             <li key={id} style={{ listStyleType: 'none', listStyle: 'none' }}>
-              <Link href={`/posts/${id}`} style={{ color: 'gray', textDecoration: 'none' }}>
+              <Link href={`/${type}/${id}`} style={{ color: 'gray', textDecoration: 'none' }}>
                 {title}
               </Link>
               <br />
@@ -161,7 +161,7 @@ export default function ArticleList({ allPostsData }: { allPostsData: Post[] }) 
             <ul>
               {posts.map(({ id, date, title }) => (
                 <li key={id} style={{ listStyleType: 'none', listStyle: 'none' }}>
-                  <Link href={`/posts/${id}`} style={{ color: 'gray', textDecoration: 'none' }}>
+                  <Link href={`/${type}/${id}`} style={{ color: 'gray', textDecoration: 'none' }}>
                     {title}
                   </Link>
                   <br />
