@@ -27,13 +27,6 @@ export default function ArticleList({ allPostsData, type }: { allPostsData: Post
     setSortOrder(sortOrder === 'asc' ? 'desc' : 'asc');
   };
 
-  const handleSortOrderKeyDown = (e: React.KeyboardEvent<HTMLSpanElement>) => {
-    if (e.key === 'Enter' || e.key === ' ') {
-      e.preventDefault();
-      toggleSortOrder();
-    }
-  };
-
   const sortedPosts = [...allPostsData].sort((a, b) => {
     const comparison = key === 'date'
       ? (a.date < b.date ? 1 : -1)
@@ -77,11 +70,8 @@ export default function ArticleList({ allPostsData, type }: { allPostsData: Post
     fontFamily: 'inherit',
   };
 
-  const getLinkStyle = (item: string): React.CSSProperties => ({
-    textDecoration: 'none',
-    color: hoveredItem === item ? '#000' : '#ccc',
-    transition: 'color 0.2s',
-  });
+  const getIndexLinkClass = (item: string) =>
+    hoveredItem === item ? 'list-index-link is-active' : 'list-index-link';
 
   return (
     <div>
@@ -102,15 +92,14 @@ export default function ArticleList({ allPostsData, type }: { allPostsData: Post
             <option value="title">title</option>
           </select>
         </span>
-        <span
-          role="button"
-          tabIndex={0}
+        <button
+          type="button"
           onClick={toggleSortOrder}
-          onKeyDown={handleSortOrderKeyDown}
           className="list-sort-toggle"
+          aria-label={`sort ${sortOrder}`}
         >
           {sortOrder}
-        </span>
+        </button>
         .
       </p>
 
@@ -120,7 +109,7 @@ export default function ArticleList({ allPostsData, type }: { allPostsData: Post
             <a
               key={letter}
               href={`#${letter}`}
-              style={getLinkStyle(letter)}
+              className={getIndexLinkClass(letter)}
               onMouseEnter={() => setHoveredItem(letter)}
               onMouseLeave={() => setHoveredItem(null)}
             >
@@ -136,7 +125,7 @@ export default function ArticleList({ allPostsData, type }: { allPostsData: Post
             <a
               key={year}
               href={`#${year}`}
-              style={getLinkStyle(year)}
+              className={getIndexLinkClass(year)}
               onMouseEnter={() => setHoveredItem(year)}
               onMouseLeave={() => setHoveredItem(null)}
             >

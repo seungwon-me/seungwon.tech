@@ -94,6 +94,11 @@ a:focus-visible {
   color: var(--secondary-color);
 }
 
+.meta time,
+.article-meta {
+  font-variant-numeric: tabular-nums;
+}
+
 /* Helper Classes from Spec */
 .lead {
   font-size: 1.2em;
@@ -228,6 +233,11 @@ article pre code {
 }
 
 .list-sort-toggle {
+  appearance: none;
+  border: none;
+  background: transparent;
+  font: inherit;
+  line-height: inherit;
   cursor: pointer;
   margin-left: 6px;
   color: var(--secondary-color);
@@ -240,6 +250,24 @@ article pre code {
 }
 
 .list-sort-toggle:focus-visible {
+  outline: 2px solid var(--focus-color);
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
+.list-index-link {
+  text-decoration: none;
+  color: #ccc;
+  border-bottom: 1px solid transparent;
+  transition: color 0.2s;
+}
+
+.list-index-link:hover,
+.list-index-link.is-active {
+  color: #000;
+}
+
+.list-index-link:focus-visible {
   outline: 2px solid var(--focus-color);
   outline-offset: 2px;
   border-radius: 2px;
