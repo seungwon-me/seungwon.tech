@@ -10,19 +10,21 @@
   },
   "dependencies": {
     "gray-matter": "^4.0.3",
-    "next": "15.5.4",
+    "next": "^15.5.12",
     "react": "19.1.0",
     "react-dom": "19.1.0",
     "remark": "^15.0.1",
     "remark-html": "^16.0.1"
   },
   "devDependencies": {
-    "@eslint/eslintrc": "^3",
+    "@eslint/eslintrc": "^3.3.4",
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
-    "eslint": "^9",
-    "eslint-config-next": "15.5.4",
+    "eslint": "^9.39.3",
+    "eslint-config-next": "^15.5.12",
+    "globals": "^17.3.0",
+    "lodash": "^4.17.23",
     "typescript": "^5"
   }
 }
