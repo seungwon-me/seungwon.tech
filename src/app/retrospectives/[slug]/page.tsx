@@ -45,11 +45,11 @@ export default async function Post({ params }: PostProps) {
                     type="application/ld+json"
                     dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
                 />
-                <h1>{postData.title}</h1>
-                <div>
-                    {postData.date}
-                </div>
-                <div dangerouslySetInnerHTML={{ __html: postData.contentHtml }} />
+                <header className="article-header">
+                    <h1>{postData.title}</h1>
+                    <div className="article-meta">{postData.date}</div>
+                </header>
+                <div className="article-body" dangerouslySetInnerHTML={{ __html: postData.contentHtml }} />
             </article>
         );
     } catch (error) {
