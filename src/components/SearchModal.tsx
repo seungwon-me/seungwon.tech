@@ -146,10 +146,17 @@ export default function SearchModal({ isOpen, onClose, allPosts }: SearchModalPr
   return (
     <>
       <div style={backdropStyle} />
-      <div ref={modalRef} style={modalStyle}>
-        <h2>Search</h2>
+      <div
+        ref={modalRef}
+        style={modalStyle}
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="search-modal-title"
+      >
+        <h2 id="search-modal-title">Search</h2>
         <input
           ref={inputRef}
+          id="search-modal-input"
           type="text"
           placeholder="Search articles and retrospectives..."
           value={searchTerm}
@@ -161,6 +168,7 @@ export default function SearchModal({ isOpen, onClose, allPosts }: SearchModalPr
           style={inputStyle}
           onFocus={() => setIsInputFocused(true)}
           onBlur={() => setIsInputFocused(false)}
+          aria-label="Search articles and retrospectives"
         />
         <ul ref={resultsRef} style={resultsListStyle}>
           {filteredPosts.map(({ id, title, type }, index) => (
