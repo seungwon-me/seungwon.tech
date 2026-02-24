@@ -7,7 +7,7 @@ import styles from './Header.module.css';
 export default function Header() {
   const pathname = usePathname();
   const isPostPage = pathname.startsWith('/posts/') || pathname.startsWith('/retrospectives/');
-  const isArticlesPage = pathname.startsWith('/articles');
+  const isArticlesPage = pathname.startsWith('/articles') || pathname.startsWith('/posts/');
   const isRetrospectivesPage = pathname.startsWith('/retrospectives');
 
   const getNavLinkClass = (target: 'about' | 'articles' | 'retrospectives') => {
