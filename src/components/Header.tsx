@@ -7,17 +7,19 @@ import styles from './Header.module.css';
 export default function Header() {
   const pathname = usePathname();
   const isPostPage = pathname.startsWith('/posts/') || pathname.startsWith('/retrospectives/');
+  const isArticlesPage = pathname.startsWith('/articles');
+  const isRetrospectivesPage = pathname.startsWith('/retrospectives');
 
   const getNavLinkClass = (target: 'about' | 'articles' | 'retrospectives') => {
     if (target === 'about') {
       return undefined;
     }
 
-    if (target === 'articles' && pathname.startsWith('/articles')) {
+    if (target === 'articles' && isArticlesPage) {
       return styles.activeLink;
     }
 
-    if (target === 'retrospectives' && pathname.startsWith('/retrospectives')) {
+    if (target === 'retrospectives' && isRetrospectivesPage) {
       return styles.activeLink;
     }
 
@@ -36,8 +38,8 @@ export default function Header() {
         </div>
         <div className='links'>
           <Link href="https://seungwon.me" className={getNavLinkClass('about')}>About me</Link>
-          <Link href="/articles" className={getNavLinkClass('articles')}>Articles</Link>
-          <Link href="/retrospectives" className={getNavLinkClass('retrospectives')}>Retrospectives</Link>
+          <Link href="/articles" className={getNavLinkClass('articles')} aria-current={isArticlesPage ? 'page' : undefined}>Articles</Link>
+          <Link href="/retrospectives" className={getNavLinkClass('retrospectives')} aria-current={isRetrospectivesPage ? 'page' : undefined}>Retrospectives</Link>
         </div>
       </nav>
     </header>

@@ -26,6 +26,7 @@ export default function SearchModal({ isOpen, onClose, allPosts }: SearchModalPr
   const router = useRouter();
 
   const [isInputFocused, setIsInputFocused] = useState(false);
+  const activeDescendantId = selectedIndex >= 0 ? `search-option-${selectedIndex}` : undefined;
 
   const filteredPosts = searchTerm
     ? allPosts.filter(post =>
@@ -169,11 +170,18 @@ export default function SearchModal({ isOpen, onClose, allPosts }: SearchModalPr
           onFocus={() => setIsInputFocused(true)}
           onBlur={() => setIsInputFocused(false)}
           aria-label="Search articles and retrospectives"
+          role="combobox"
+          aria-expanded={filteredPosts.length > 0}
+          aria-controls="search-modal-results"
+          aria-activedescendant={activeDescendantId}
         />
-        <ul ref={resultsRef} style={resultsListStyle}>
+        <ul ref={resultsRef} id="search-modal-results" role="listbox" style={resultsListStyle}>
           {filteredPosts.map(({ id, title, type }, index) => (
             <li
               key={id}
+              id={`search-option-${index}`}
+              role="option"
+              aria-selected={index === selectedIndex}
               style={{
                 marginBottom: '10px',
                 padding: '8px',
