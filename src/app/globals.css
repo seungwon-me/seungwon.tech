@@ -362,6 +362,12 @@ article img {
   color: var(--text-color);
 }
 
+.content-link:focus-visible {
+  outline: 2px solid var(--focus-color);
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
 .content-badge {
   margin-left: 8px;
   padding: 2px 6px;
