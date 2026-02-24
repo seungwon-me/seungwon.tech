@@ -11,6 +11,7 @@
   text-decoration: none;
   color: var(--secondary-color);
   transition: color 0.2s;
+  line-height: 1.4;
 }
 
 .nav a:hover {
@@ -18,7 +19,13 @@
 }
 
 .nav div:last-child a {
-  margin-left: 24px;
+  margin-left: 0;
+}
+
+.nav div:last-child {
+  display: flex;
+  align-items: center;
+  gap: 24px;
 }
 
 /* Responsive Styles */
@@ -30,10 +37,12 @@
 
   .nav div:last-child {
     margin-top: 16px;
+    flex-wrap: wrap;
+    gap: 12px 18px;
   }
 
   .nav div:last-child a {
-    margin-left: 0;
-    margin-right: 24px;
+    margin-right: 0;
+    padding: 2px 0;
   }
 }
