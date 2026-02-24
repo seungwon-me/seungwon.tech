@@ -207,6 +207,10 @@ article pre code {
   margin-bottom: 20px;
 }
 
+.article-header h1 {
+  text-wrap: balance;
+}
+
 .article-meta {
   font-family: var(--font-sans);
   font-size: 14px;
@@ -216,6 +220,51 @@ article pre code {
 
 .article-body > *:last-child {
   margin-bottom: 0;
+}
+
+.article-body {
+  overflow-wrap: break-word;
+}
+
+article p {
+  text-wrap: pretty;
+}
+
+article hr {
+  border: 0;
+  border-top: 1px solid var(--focus-color);
+  margin: 28px 0;
+}
+
+article table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 20px 0;
+  font-size: 0.96rem;
+}
+
+article th,
+article td {
+  border-bottom: 1px solid #e3e3df;
+  padding: 8px 10px;
+  text-align: left;
+}
+
+article thead th {
+  font-family: var(--font-sans);
+  font-size: 0.84rem;
+  letter-spacing: 0.01em;
+  text-transform: uppercase;
+  color: var(--secondary-color);
+}
+
+article img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+  margin: 20px auto;
+  border: 1px solid #ecece7;
+  border-radius: 8px;
 }
 
 .list-controls {
@@ -239,6 +288,8 @@ article pre code {
   font: inherit;
   line-height: inherit;
   cursor: pointer;
+  min-height: 28px;
+  padding: 0 2px;
   margin-left: 6px;
   color: var(--secondary-color);
   border-bottom: 1px dashed transparent;
@@ -355,6 +406,11 @@ article pre code {
     margin-bottom: 14px;
   }
 
+  .list-sort-toggle {
+    min-height: 32px;
+    padding: 0 4px;
+  }
+
   article h2,
   article h3 {
     margin-top: 24px;
@@ -363,6 +419,15 @@ article pre code {
   article pre {
     padding: 0.8rem;
     margin: 18px 0;
+  }
+
+  article table {
+    font-size: 0.9rem;
+  }
+
+  article th,
+  article td {
+    padding: 7px 8px;
   }
 }
 
