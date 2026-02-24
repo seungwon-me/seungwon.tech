@@ -18,6 +18,11 @@
   color: var(--text-color);
 }
 
+.activeLink {
+  color: var(--text-color) !important;
+  border-bottom: 1px solid var(--focus-color);
+}
+
 .nav div:last-child a {
   margin-left: 0;
 }
