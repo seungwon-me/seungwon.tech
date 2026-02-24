@@ -135,10 +135,10 @@ export default function ArticleList({ allPostsData, type }: { allPostsData: Post
       )}
 
       {mode === 'sorted' ? (
-        <ul>
+        <ul className="content-list">
           {sortedPosts.map(({ id, date, title }) => (
-            <li key={id} style={{ listStyleType: 'none', listStyle: 'none' }}>
-              <Link href={`/${type}/${id}`} style={{ color: 'gray', textDecoration: 'none' }}>
+            <li key={id} className="content-item">
+              <Link href={`/${type}/${id}`} className="content-link">
                 {title}
               </Link>
               <br />
@@ -155,10 +155,10 @@ export default function ArticleList({ allPostsData, type }: { allPostsData: Post
         }).map(([group, posts]) => (
           <div key={group} id={group}>
             <h3>{group}</h3>
-            <ul>
+            <ul className="content-list">
               {posts.map(({ id, date, title }) => (
-                <li key={id} style={{ listStyleType: 'none', listStyle: 'none' }}>
-                  <Link href={`/${type}/${id}`} style={{ color: 'gray', textDecoration: 'none' }}>
+                <li key={id} className="content-item">
+                  <Link href={`/${type}/${id}`} className="content-link">
                     {title}
                   </Link>
                   <br />

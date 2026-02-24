@@ -17,23 +17,23 @@ export default function Home() {
       </p>
 
       <h3>Latest</h3>
-      <ul>
+      <ul className="content-list">
         {allContent.map(({ id, date, title, type }) => (
-          <li key={id} style={{ listStyleType: 'none', listStyle: 'none', marginBottom: '0.5rem' }}>
-            <Link href={`/${type}/${id}`} style={{ color: 'gray', textDecoration: 'none' }}>
+          <li key={id} className="content-item">
+            <Link href={`/${type}/${id}`} className="content-link">
               {title}
             </Link>
             <br />
             <small className="meta">
               {date}
-              {type === 'retrospectives' && <span style={{ marginLeft: '0.5rem', padding: '0.2rem 0.4rem', backgroundColor: '#eee', borderRadius: '3px', fontSize: '0.7rem' }}>Retrospective</span>}
+              {type === 'retrospectives' && <span className="content-badge">Retrospective</span>}
             </small>
           </li>
         ))}
       </ul>
 
       <div style={{ marginTop: '2rem', textAlign: 'center' }}>
-        <Link href="/articles" style={{ color: 'gray', textDecoration: 'none', fontWeight: 'bold' }}>
+        <Link href="/articles" className="more-link">
           ... more
         </Link>
       </div>
