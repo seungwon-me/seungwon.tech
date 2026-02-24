@@ -25,7 +25,7 @@ export default function Home() {
             </Link>
             <br />
             <small className="meta">
-              {date}
+              <time dateTime={date}>{date}</time>
               {type === 'retrospectives' && <span className="content-badge">Retrospective</span>}
             </small>
           </li>
