@@ -12,8 +12,8 @@ export default function Home() {
   return (
     <section>
       <h2>Seungwon.Blog</h2>
-      <p className="lead">
-        Hello! I&apos;m Seungwon. <br/> a Web Application Developer with Spring Boot, Java, Kotlin.
+      <p className="lead intro-lead">
+        Hello! I&apos;m Seungwon, a Web Application Developer with Spring Boot, Java, Kotlin.
       </p>
 
       <h3>Latest</h3>
@@ -32,7 +32,7 @@ export default function Home() {
         ))}
       </ul>
 
-      <div style={{ marginTop: '2rem', textAlign: 'center' }}>
+      <div className="more-link-wrap">
         <Link href="/articles" className="more-link">
           ... more
         </Link>
