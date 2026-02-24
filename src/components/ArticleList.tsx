@@ -78,7 +78,12 @@ export default function ArticleList({ allPostsData, type }: { allPostsData: Post
       <p className="lead list-controls">
         <span className="list-control">
           <span>{mode}</span>
-          <select value={mode} onChange={handleModeChange} style={selectStyle}>
+          <select
+            value={mode}
+            onChange={handleModeChange}
+            style={selectStyle}
+            aria-label="list mode"
+          >
             <option value="sorted">sorted</option>
             <option value="group">group</option>
           </select>
@@ -87,7 +92,12 @@ export default function ArticleList({ allPostsData, type }: { allPostsData: Post
         by{' '}
         <span className="list-control">
           <span>{key}</span>
-          <select value={key} onChange={handleKeyChange} style={selectStyle}>
+          <select
+            value={key}
+            onChange={handleKeyChange}
+            style={selectStyle}
+            aria-label="group key"
+          >
             <option value="date">date</option>
             <option value="title">title</option>
           </select>
@@ -96,7 +106,7 @@ export default function ArticleList({ allPostsData, type }: { allPostsData: Post
           type="button"
           onClick={toggleSortOrder}
           className="list-sort-toggle"
-          aria-label={`sort ${sortOrder}`}
+          aria-label={`toggle sort order, current ${sortOrder}`}
           aria-pressed={sortOrder === 'asc'}
         >
           {sortOrder}
@@ -111,6 +121,7 @@ export default function ArticleList({ allPostsData, type }: { allPostsData: Post
               key={letter}
               href={`#${letter}`}
               className={getIndexLinkClass(letter)}
+              aria-label={`jump to ${letter}`}
               onMouseEnter={() => setHoveredItem(letter)}
               onMouseLeave={() => setHoveredItem(null)}
             >
@@ -127,6 +138,7 @@ export default function ArticleList({ allPostsData, type }: { allPostsData: Post
               key={year}
               href={`#${year}`}
               className={getIndexLinkClass(year)}
+              aria-label={`jump to ${year}`}
               onMouseEnter={() => setHoveredItem(year)}
               onMouseLeave={() => setHoveredItem(null)}
             >
