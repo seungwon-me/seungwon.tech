@@ -97,6 +97,7 @@ export default function ArticleList({ allPostsData, type }: { allPostsData: Post
           onClick={toggleSortOrder}
           className="list-sort-toggle"
           aria-label={`sort ${sortOrder}`}
+          aria-pressed={sortOrder === 'asc'}
         >
           {sortOrder}
         </button>
@@ -143,7 +144,9 @@ export default function ArticleList({ allPostsData, type }: { allPostsData: Post
                 {title}
               </Link>
               <br />
-              <small className="meta">{date}</small>
+              <small className="meta">
+                <time dateTime={date}>{date}</time>
+              </small>
             </li>
           ))}
         </ul>
@@ -163,7 +166,9 @@ export default function ArticleList({ allPostsData, type }: { allPostsData: Post
                     {title}
                   </Link>
                   <br />
-                  <small className="meta">{date}</small>
+                  <small className="meta">
+                    <time dateTime={date}>{date}</time>
+                  </small>
                 </li>
               ))}
             </ul>

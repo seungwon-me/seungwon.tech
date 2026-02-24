@@ -300,6 +300,10 @@ article img {
   border-bottom-color: var(--secondary-color);
 }
 
+.list-sort-toggle[aria-pressed="true"] {
+  color: var(--text-color);
+}
+
 .list-sort-toggle:focus-visible {
   outline: 2px solid var(--focus-color);
   outline-offset: 2px;
