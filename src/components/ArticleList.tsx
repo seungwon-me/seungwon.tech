@@ -27,6 +27,13 @@ export default function ArticleList({ allPostsData, type }: { allPostsData: Post
     setSortOrder(sortOrder === 'asc' ? 'desc' : 'asc');
   };
 
+  const handleSortOrderKeyDown = (e: React.KeyboardEvent<HTMLSpanElement>) => {
+    if (e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault();
+      toggleSortOrder();
+    }
+  };
+
   const sortedPosts = [...allPostsData].sort((a, b) => {
     const comparison = key === 'date'
       ? (a.date < b.date ? 1 : -1)
@@ -71,7 +78,6 @@ export default function ArticleList({ allPostsData, type }: { allPostsData: Post
   };
 
   const getLinkStyle = (item: string): React.CSSProperties => ({
-    marginRight: '10px',
     textDecoration: 'none',
     color: hoveredItem === item ? '#000' : '#ccc',
     transition: 'color 0.2s',
@@ -79,8 +85,8 @@ export default function ArticleList({ allPostsData, type }: { allPostsData: Post
 
   return (
     <div>
-      <p className="lead">
-        <span style={{ position: 'relative', display: 'inline-block' }}>
+      <p className="lead list-controls">
+        <span className="list-control">
           <span>{mode}</span>
           <select value={mode} onChange={handleModeChange} style={selectStyle}>
             <option value="sorted">sorted</option>
@@ -89,21 +95,27 @@ export default function ArticleList({ allPostsData, type }: { allPostsData: Post
         </span>
         {' '}
         by{' '}
-        <span style={{ position: 'relative', display: 'inline-block' }}>
+        <span className="list-control">
           <span>{key}</span>
           <select value={key} onChange={handleKeyChange} style={selectStyle}>
             <option value="date">date</option>
             <option value="title">title</option>
           </select>
         </span>
-        <span onClick={toggleSortOrder} style={{ cursor: 'pointer', marginLeft: '10px' }}>
+        <span
+          role="button"
+          tabIndex={0}
+          onClick={toggleSortOrder}
+          onKeyDown={handleSortOrderKeyDown}
+          className="list-sort-toggle"
+        >
           {sortOrder}
         </span>
         .
       </p>
 
       {mode === 'group' && key === 'title' && (
-        <div style={{ marginBottom: '20px' }}>
+        <div className="list-index-links">
           {alphabet.map(letter => (
             <a
               key={letter}
@@ -119,7 +131,7 @@ export default function ArticleList({ allPostsData, type }: { allPostsData: Post
       )}
 
       {mode === 'group' && key === 'date' && (
-        <div style={{ marginBottom: '20px' }}>
+        <div className="list-index-links">
           {years.map(year => (
             <a
               key={year}
