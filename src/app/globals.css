@@ -351,6 +351,7 @@ article img {
 .content-link {
   color: gray;
   text-decoration: none;
+  line-height: 1.45;
 }
 
 .content-link:hover {
@@ -364,6 +365,11 @@ article img {
   background-color: #eee;
   border-radius: 3px;
   font-size: 11px;
+}
+
+.content-item .meta {
+  display: block;
+  margin-top: 2px;
 }
 
 .more-link {
