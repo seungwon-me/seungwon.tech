@@ -28,12 +28,9 @@ export default function ArticleList({ allPostsData, type }: { allPostsData: Post
   };
 
   const sortedPosts = [...allPostsData].sort((a, b) => {
-    let comparison = 0;
-    if (key === 'date') {
-      comparison = a.date < b.date ? 1 : -1;
-    } else {
-      comparison = a.title.localeCompare(b.title);
-    }
+    const comparison = key === 'date'
+      ? (a.date < b.date ? 1 : -1)
+      : a.title.localeCompare(b.title);
     return sortOrder === 'asc' ? -comparison : comparison;
   });
 
