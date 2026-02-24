@@ -51,7 +51,7 @@ export default async function Post({ params }: PageProps) {
                 />
                 <header className="article-header">
                     <h1>{postData.title}</h1>
-                    <div className="article-meta">{postData.date}</div>
+                    <time className="article-meta" dateTime={postData.date}>{postData.date}</time>
                 </header>
                 <div className="article-body" dangerouslySetInnerHTML={{ __html: postData.contentHtml }} />
             </article>
