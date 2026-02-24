@@ -31,7 +31,7 @@ export default function Header() {
       <nav className={styles.nav}>
         <div>
           {isPostPage ? (
-            <Link href="/">prev.</Link>
+            <Link href="/" aria-label="Back to home">prev.</Link>
           ) : (
             <Link href="/">Seungwon.tech</Link>
           )}
