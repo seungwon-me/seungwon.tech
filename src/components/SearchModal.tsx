@@ -179,6 +179,9 @@ export default function SearchModal({ isOpen, onClose, allPosts }: SearchModalPr
         <p className="meta" aria-live="polite" style={{ marginBottom: '10px' }}>
           {searchTerm.length === 0 ? 'Type to search' : `${filteredPosts.length} result${filteredPosts.length === 1 ? '' : 's'}`}
         </p>
+        <p className="meta" style={{ marginBottom: '12px' }}>
+          Use ↑ ↓ to move, Enter to open, Esc to close.
+        </p>
         <ul ref={resultsRef} id="search-modal-results" role="listbox" aria-label="Search results" style={resultsListStyle}>
           {showNoResults && (
             <li className="meta" style={{ padding: '8px', listStyle: 'none' }}>
