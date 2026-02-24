@@ -1,6 +1,12 @@
 import { dirname } from "path";
 import { fileURLToPath } from "url";
-import { FlatCompat } from "@eslint/eslintrc";
+import * as eslintrcPkg from "@eslint/eslintrc";
+
+const FlatCompat = eslintrcPkg.FlatCompat ?? eslintrcPkg.default?.FlatCompat;
+
+if (!FlatCompat) {
+  throw new Error("FlatCompat export not found in @eslint/eslintrc");
+}
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
