@@ -34,6 +34,7 @@ export default function SearchModal({ isOpen, onClose, allPosts }: SearchModalPr
         post.date.includes(searchTerm)
       )
     : [];
+  const showNoResults = searchTerm.length > 0 && filteredPosts.length === 0;
 
   useEffect(() => {
     if (isOpen) {
@@ -175,7 +176,15 @@ export default function SearchModal({ isOpen, onClose, allPosts }: SearchModalPr
           aria-controls="search-modal-results"
           aria-activedescendant={activeDescendantId}
         />
-        <ul ref={resultsRef} id="search-modal-results" role="listbox" style={resultsListStyle}>
+        <p className="meta" aria-live="polite" style={{ marginBottom: '10px' }}>
+          {searchTerm.length === 0 ? 'Type to search' : `${filteredPosts.length} result${filteredPosts.length === 1 ? '' : 's'}`}
+        </p>
+        <ul ref={resultsRef} id="search-modal-results" role="listbox" aria-label="Search results" style={resultsListStyle}>
+          {showNoResults && (
+            <li className="meta" style={{ padding: '8px', listStyle: 'none' }}>
+              No matching posts.
+            </li>
+          )}
           {filteredPosts.map(({ id, title, type }, index) => (
             <li
               key={id}
