@@ -55,7 +55,9 @@ export default function ArticleList({ allPostsData, type }: { allPostsData: Post
     }
   }
 
-  const alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split('');
+  const titleGroups = Object.keys(groupedPosts)
+    .filter(group => /^[A-Z]$/.test(group))
+    .sort((a, b) => sortOrder === 'asc' ? a.localeCompare(b) : b.localeCompare(a));
   const years = Object.keys(groupedPosts).sort((a, b) => sortOrder === 'asc' ? a.localeCompare(b) : b.localeCompare(a));
 
   const selectStyle: React.CSSProperties = {
@@ -116,7 +118,7 @@ export default function ArticleList({ allPostsData, type }: { allPostsData: Post
 
       {mode === 'group' && key === 'title' && (
         <div className="list-index-links">
-          {alphabet.map(letter => (
+          {titleGroups.map(letter => (
             <a
               key={letter}
               href={`#${letter}`}
