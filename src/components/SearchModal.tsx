@@ -185,7 +185,7 @@ export default function SearchModal({ isOpen, onClose, allPosts }: SearchModalPr
               No matching posts.
             </li>
           )}
-          {filteredPosts.map(({ id, title, type }, index) => (
+          {filteredPosts.map(({ id, title, type, date }, index) => (
             <li
               key={id}
               id={`search-option-${index}`}
@@ -204,6 +204,10 @@ export default function SearchModal({ isOpen, onClose, allPosts }: SearchModalPr
               <Link href={`/${type}/${id}`} onClick={onClose} style={{ textDecoration: 'none', color: '#333', display: 'block' }}>
                 {title}
               </Link>
+              <small className="meta" style={{ display: 'block', marginTop: '4px' }}>
+                <time dateTime={date}>{date}</time>
+                <span className="content-badge">{type === 'retrospectives' ? 'Retrospective' : 'Post'}</span>
+              </small>
             </li>
           ))}
         </ul>
