@@ -7,6 +7,7 @@ type Post = {
   id: string;
   title: string;
   date: string;
+  excerpt: string;
   type: 'posts' | 'retrospectives';
 };
 
@@ -15,7 +16,7 @@ export default function GlobalSearch({ allPosts }: { allPosts: Post[] }) {
 
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
-      if ((event.metaKey || event.ctrlKey) && event.key === 'k') {
+      if ((event.metaKey || event.ctrlKey) && event.key.toLowerCase() === 'k') {
         event.preventDefault();
         setIsSearchModalOpen(true);
       }

@@ -3,7 +3,7 @@ import { Inter, Noto_Serif_KR } from "next/font/google";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import GlobalSearch from "@/components/GlobalSearch";
-import { getSortedPostsData } from "@/lib/posts";
+import { getSearchablePostsData } from "@/lib/posts";
 import "./globals.css";
 
 const inter = Inter({
@@ -17,9 +17,42 @@ const notoSerifKr = Noto_Serif_KR({
   variable: "--font-serif",
 });
 
+const siteName = "Seungwon.tech";
+const siteDescription = "Java, Kotlin, Spring, DDD를 기록하는 개인 기술 블로그";
+const siteUrl = "https://seungwon.tech";
+
 export const metadata: Metadata = {
-  title: "Seungwon.tech",
-  description: "A minimal, typography-focused blog.",
+  metadataBase: new URL(siteUrl),
+  title: {
+    default: siteName,
+    template: `%s | ${siteName}`,
+  },
+  description: siteDescription,
+  alternates: {
+    canonical: siteUrl,
+  },
+  openGraph: {
+    title: siteName,
+    description: siteDescription,
+    url: siteUrl,
+    siteName,
+    type: "website",
+    locale: "ko_KR",
+    images: [
+      {
+        url: "/og-image.png",
+        width: 1200,
+        height: 630,
+        alt: siteName,
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: siteName,
+    description: siteDescription,
+    images: ["/og-image.png"],
+  },
 };
 
 export default function RootLayout({
@@ -27,8 +60,8 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const allPosts = getSortedPostsData('posts').map(p => ({ ...p, type: 'posts' as const }));
-  const allRetrospectives = getSortedPostsData('retrospectives').map(p => ({ ...p, type: 'retrospectives' as const }));
+  const allPosts = getSearchablePostsData('posts');
+  const allRetrospectives = getSearchablePostsData('retrospectives');
   const allSearchablePosts = [...allPosts, ...allRetrospectives];
 
   return (

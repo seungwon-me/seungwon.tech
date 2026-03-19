@@ -10,6 +10,7 @@ type Post = {
   id: string;
   title: string;
   date: string;
+  excerpt: string;
   type: 'posts' | 'retrospectives';
 };
 
@@ -18,6 +19,21 @@ interface SearchModalProps {
   onClose: () => void;
   allPosts: Post[];
 }
+
+const normalize = (value: string) => value.toLowerCase().replace(/\s/g, '');
+
+const highlight = (text: string, term: string) => {
+  if (!term.trim()) return text;
+  const escapedTerm = term.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  const regex = new RegExp(`(${escapedTerm})`, 'ig');
+  const parts = text.split(regex);
+
+  return parts.map((part, index) =>
+    regex.test(part)
+      ? <mark key={`${part}-${index}`}>{part}</mark>
+      : <span key={`${part}-${index}`}>{part}</span>
+  );
+};
 
 export default function SearchModal({ isOpen, onClose, allPosts }: SearchModalProps) {
   const [searchTerm, setSearchTerm] = useState('');
@@ -31,7 +47,8 @@ export default function SearchModal({ isOpen, onClose, allPosts }: SearchModalPr
 
   const filteredPosts = searchTerm
     ? allPosts.filter(post =>
-      post.title.toLowerCase().replace(/\s/g, '').includes(searchTerm.toLowerCase().replace(/\s/g, '')) ||
+      normalize(post.title).includes(normalize(searchTerm)) ||
+      normalize(post.excerpt).includes(normalize(searchTerm)) ||
       post.date.includes(searchTerm)
     )
     : [];
@@ -108,11 +125,9 @@ export default function SearchModal({ isOpen, onClose, allPosts }: SearchModalPr
             event.preventDefault();
             last.focus();
           }
-        } else {
-          if (active === last) {
-            event.preventDefault();
-            first.focus();
-          }
+        } else if (active === last) {
+          event.preventDefault();
+          first.focus();
         }
       }
     };
@@ -149,7 +164,7 @@ export default function SearchModal({ isOpen, onClose, allPosts }: SearchModalPr
           ref={inputRef}
           id="search-modal-input"
           type="text"
-          placeholder="Search articles and retrospectives..."
+          placeholder="Search title, content, date..."
           value={searchTerm}
           onChange={(e) => {
             setSearchTerm(e.target.value);
@@ -167,7 +182,7 @@ export default function SearchModal({ isOpen, onClose, allPosts }: SearchModalPr
           {searchTerm.length === 0 ? 'Type to search' : `${filteredPosts.length} result${filteredPosts.length === 1 ? '' : 's'}`}
         </p>
         <p className={`meta ${styles.helper}`}>
-          Use ↑ ↓ to move, Enter to open, Esc to close.
+          Use ↑ ↓ to move, Enter to open, Esc to close. (Cmd/Ctrl + K)
         </p>
         <ul ref={resultsRef} id="search-modal-results" role="listbox" aria-label="Search results" className={styles.results}>
           {showNoResults && (
@@ -175,7 +190,7 @@ export default function SearchModal({ isOpen, onClose, allPosts }: SearchModalPr
               No matching posts.
             </li>
           )}
-          {filteredPosts.map(({ id, title, type, date }, index) => (
+          {filteredPosts.map(({ id, title, type, date, excerpt }, index) => (
             <li
               key={id}
               id={`search-option-${index}`}
@@ -185,12 +200,13 @@ export default function SearchModal({ isOpen, onClose, allPosts }: SearchModalPr
               onMouseEnter={() => setSelectedIndex(index)}
             >
               <Link href={getContentHref(type, id)} onClick={onClose} className={styles.resultLink}>
-                {title}
+                {highlight(title, searchTerm)}
               </Link>
-              <small className="meta" style={{ display: 'block', marginTop: '4px' }}>
+              <small className={`meta ${styles.resultMeta}`}>
                 <time dateTime={date}>{date}</time>
                 <span className="content-badge">{type === 'retrospectives' ? 'Retrospective' : 'Post'}</span>
               </small>
+              <p className={styles.excerpt}>{highlight(excerpt, searchTerm)}</p>
             </li>
           ))}
         </ul>

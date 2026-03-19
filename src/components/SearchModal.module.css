@@ -74,3 +74,24 @@
   padding: 8px;
   list-style: none;
 }
+
+
+.resultMeta {
+  display: block;
+  margin-top: 4px;
+}
+
+.excerpt {
+  margin-top: 6px;
+  font-size: 0.88rem;
+  color: var(--secondary-color);
+  line-height: 1.45;
+}
+
+.excerpt mark,
+.resultLink mark {
+  background: #fff2cc;
+  color: inherit;
+  padding: 0 2px;
+  border-radius: 2px;
+}
