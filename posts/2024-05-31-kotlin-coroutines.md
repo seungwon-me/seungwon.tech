@@ -337,7 +337,7 @@ suspend fun cancelMinjuRoutine() {
 
 Job 또는 Deferred 클래스에서 cancel 함수를 구현해 코루틴을 취소할 수 있다. 
 
-하지만 코루틴의 실행을 취소 시키려면 일시 중지(delay)가 무조건 필요하다. 
+하지만 코루틴 취소에 delay가 무조건 필요한 것은 아니다. 핵심은 취소를 감지할 수 있는 cancellation point(일시 중단 지점)나 isActive 같은 협력 취소 체크다. 
 
 단순히 cancel만 사용하게 된다면, 해당 코루틴은 **즉시 중지되지 않고,** 계속 실행될 수 있다. 
 

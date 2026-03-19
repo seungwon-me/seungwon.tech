@@ -38,7 +38,7 @@ ThrowableObject은 자바의 모든 예외에 대한 기본 클래스인 Throwab
 
 ## **Checked.’ Unchecked Exception**
 
-Checked Exception은 개발자가 무조건 처리해야하는 컴파일 시점에서 발생하는 오류이다.
+Checked Exception은 개발자가 처리(try-catch 또는 throws)를 강제받는 예외 타입이다. 예외의 실제 발생은 런타임에 일어난다.
 
 예로 들자면. Thread.sleep 메서드를 사용하고 싶을 때 일반 적인 메서드 블록에 작성하면 빨간 줄이 생기는 모습을 본 적이 있을 것이다.
 

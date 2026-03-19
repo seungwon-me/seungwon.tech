@@ -42,6 +42,6 @@ curl -X PUT /api/users/1 -d '{ "name": "seung won", "age": 19, "email": "seungwo
 curl -X PATCH /api/users/1 -d '{ "age": 19 }'
 ```
 
-PUT은 URI로 특정 리소스를 식별하지 못했을 때 새 리소스를 추가한다.
+PUT에서 리소스가 없을 때 새 리소스를 생성할지(upsert)는 API 설계/서버 정책에 따라 다르다.
 
 PATCH는 굳이 전체 리소스 내용을 담아서 보낼 필요가 없다.

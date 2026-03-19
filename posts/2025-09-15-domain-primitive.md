@@ -76,6 +76,6 @@ int/str 값을 Wrapping 하여 추가의 오버헤드는 발생할 수밖에 없
    Application Service에 흩어져있던 **값에 대한 행위**들을 캡슐화하여 Application Service에서는 **행위의 조합**만 다루게 해준다.
 
 
-Domain Primitive는 Value Object와 다르게 의미, 행위, 유효성을 무조건 함께 다뤄야한다.
+Domain Primitive는 Value Object와 다르게 의미, 행위, 유효성을 함께 다루는 것이 권장된다.
 
 Money의 예제에서는 property가 2개이지만, 나는 FCC처럼 하나의 값만 가지는 것이 이상적이라고 생각한다.

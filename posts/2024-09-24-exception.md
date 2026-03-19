@@ -26,13 +26,13 @@ date: '2024-09-24'
 ### Checked Exception
 
 - 반드시 예외를 처리해야한다. (try’catch, throws 로 무조건 처리해야한다.)
-- 컴파일 단계에서 발생
-- 트랜잭션 roll back 없음.
+- 컴파일러가 처리(try-catch, throws)를 강제
+- Spring 기본 정책에서는 Checked Exception이 롤백 대상이 아님(설정으로 변경 가능)
 - IOException 등..
 
 ### Unchecked Exception
 
 - 예외 처리가 강제가 아님
-- 실행 단계(런타임)에서 발생
-- 트랜잭션 roll back 존재
+- 컴파일러가 처리 강제를 하지 않음
+- Spring 기본 정책에서는 RuntimeException/Error가 롤백 대상
 - NullPointerException 등..
