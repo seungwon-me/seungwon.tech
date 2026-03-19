@@ -2,6 +2,7 @@
 
 import Link from 'next/link';
 import { useState } from 'react';
+import { getContentHref, type ContentType } from '@/lib/contentRoute';
 
 type Post = {
   id: string;
@@ -9,19 +10,11 @@ type Post = {
   date: string;
 };
 
-export default function ArticleList({ allPostsData, type }: { allPostsData: Post[], type: 'posts' | 'retrospectives' }) {
+export default function ArticleList({ allPostsData, type }: { allPostsData: Post[], type: ContentType }) {
   const [mode, setMode] = useState<'sorted' | 'group'>('sorted');
   const [key, setKey] = useState<'date' | 'title'>('date');
   const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('desc');
   const [hoveredItem, setHoveredItem] = useState<string | null>(null);
-
-  const handleModeChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    setMode(e.target.value as 'sorted' | 'group');
-  };
-
-  const handleKeyChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    setKey(e.target.value as 'date' | 'title');
-  };
 
   const toggleSortOrder = () => {
     setSortOrder(sortOrder === 'asc' ? 'desc' : 'asc');
@@ -60,50 +53,36 @@ export default function ArticleList({ allPostsData, type }: { allPostsData: Post
     .sort((a, b) => sortOrder === 'asc' ? a.localeCompare(b) : b.localeCompare(a));
   const years = Object.keys(groupedPosts).sort((a, b) => sortOrder === 'asc' ? a.localeCompare(b) : b.localeCompare(a));
 
-  const selectStyle: React.CSSProperties = {
-    position: 'absolute',
-    top: 0,
-    left: 0,
-    width: '100%',
-    height: '100%',
-    opacity: 0,
-    cursor: 'pointer',
-    fontSize: 'inherit',
-    fontFamily: 'inherit',
-  };
-
   const getIndexLinkClass = (item: string) =>
     hoveredItem === item ? 'list-index-link is-active' : 'list-index-link';
 
   return (
     <div>
-      <p className="lead list-controls">
-        <span className="list-control">
-          <span>{mode}</span>
-          <select
-            value={mode}
-            onChange={handleModeChange}
-            style={selectStyle}
-            aria-label="list mode"
-          >
-            <option value="sorted">sorted</option>
-            <option value="group">group</option>
-          </select>
-        </span>
-        {' '}
-        by{' '}
-        <span className="list-control">
-          <span>{key}</span>
-          <select
-            value={key}
-            onChange={handleKeyChange}
-            style={selectStyle}
-            aria-label="group key"
-          >
-            <option value="date">date</option>
-            <option value="title">title</option>
-          </select>
-        </span>
+      <div className="lead list-controls">
+        <label className="list-label" htmlFor="mode-select">mode</label>
+        <select
+          id="mode-select"
+          value={mode}
+          onChange={(e) => setMode(e.target.value as 'sorted' | 'group')}
+          className="list-select"
+          aria-label="list mode"
+        >
+          <option value="sorted">sorted</option>
+          <option value="group">group</option>
+        </select>
+
+        <label className="list-label" htmlFor="key-select">by</label>
+        <select
+          id="key-select"
+          value={key}
+          onChange={(e) => setKey(e.target.value as 'date' | 'title')}
+          className="list-select"
+          aria-label="group key"
+        >
+          <option value="date">date</option>
+          <option value="title">title</option>
+        </select>
+
         <button
           type="button"
           onClick={toggleSortOrder}
@@ -113,8 +92,7 @@ export default function ArticleList({ allPostsData, type }: { allPostsData: Post
         >
           {sortOrder}
         </button>
-        .
-      </p>
+      </div>
 
       {mode === 'group' && key === 'title' && (
         <div className="list-index-links">
@@ -154,7 +132,7 @@ export default function ArticleList({ allPostsData, type }: { allPostsData: Post
         <ul className="content-list">
           {sortedPosts.map(({ id, date, title }) => (
             <li key={id} className="content-item">
-              <Link href={`/${type}/${id}`} className="content-link">
+              <Link href={getContentHref(type, id)} className="content-link">
                 {title}
               </Link>
               <br />
@@ -176,7 +154,7 @@ export default function ArticleList({ allPostsData, type }: { allPostsData: Post
             <ul className="content-list">
               {posts.map(({ id, date, title }) => (
                 <li key={id} className="content-item">
-                  <Link href={`/${type}/${id}`} className="content-link">
+                  <Link href={getContentHref(type, id)} className="content-link">
                     {title}
                   </Link>
                   <br />

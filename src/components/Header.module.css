@@ -10,7 +10,7 @@
 .nav a {
   text-decoration: none;
   color: var(--secondary-color);
-  transition: color 0.2s;
+  transition: color 0.2s, background-color 0.2s, border-color 0.2s;
   line-height: 1.4;
 }
 
@@ -20,7 +20,11 @@
 
 .activeLink {
   color: var(--text-color) !important;
-  border-bottom: 1px solid var(--focus-color);
+  border: 1px solid var(--border-color);
+  background: #f2f2ee;
+  border-radius: 999px;
+  padding: 4px 10px;
+  font-weight: 700;
 }
 
 .nav div:last-child a {
@@ -30,10 +34,9 @@
 .nav div:last-child {
   display: flex;
   align-items: center;
-  gap: 24px;
+  gap: 18px;
 }
 
-/* Responsive Styles */
 @media (max-width: 600px) {
   .nav {
     flex-direction: column;
@@ -43,7 +46,7 @@
   .nav div:last-child {
     margin-top: 16px;
     flex-wrap: wrap;
-    gap: 12px 18px;
+    gap: 10px 12px;
   }
 
   .nav div:last-child a {

@@ -3,6 +3,8 @@
 import { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
+import { getContentHref } from '@/lib/contentRoute';
+import styles from './SearchModal.module.css';
 
 type Post = {
   id: string;
@@ -25,23 +27,30 @@ export default function SearchModal({ isOpen, onClose, allPosts }: SearchModalPr
   const resultsRef = useRef<HTMLUListElement>(null);
   const router = useRouter();
 
-  const [isInputFocused, setIsInputFocused] = useState(false);
   const activeDescendantId = selectedIndex >= 0 ? `search-option-${selectedIndex}` : undefined;
 
   const filteredPosts = searchTerm
     ? allPosts.filter(post =>
-        post.title.toLowerCase().replace(/\s/g, '').includes(searchTerm.toLowerCase().replace(/\s/g, '')) ||
-        post.date.includes(searchTerm)
-      )
+      post.title.toLowerCase().replace(/\s/g, '').includes(searchTerm.toLowerCase().replace(/\s/g, '')) ||
+      post.date.includes(searchTerm)
+    )
     : [];
   const showNoResults = searchTerm.length > 0 && filteredPosts.length === 0;
 
   useEffect(() => {
-    if (isOpen) {
-      setSearchTerm('');
-      setSelectedIndex(-1);
-      setTimeout(() => inputRef.current?.focus(), 100);
-    }
+    if (!isOpen) return;
+
+    setSearchTerm('');
+    setSelectedIndex(-1);
+    const timer = setTimeout(() => inputRef.current?.focus(), 50);
+
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+
+    return () => {
+      clearTimeout(timer);
+      document.body.style.overflow = previousOverflow;
+    };
   }, [isOpen]);
 
   const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
@@ -59,7 +68,7 @@ export default function SearchModal({ isOpen, onClose, allPosts }: SearchModalPr
       event.preventDefault();
       const selectedPost = filteredPosts[selectedIndex];
       if (selectedPost) {
-        router.push(`/${selectedPost.type}/${selectedPost.id}`);
+        router.push(getContentHref(selectedPost.type, selectedPost.id));
         onClose();
       }
     }
@@ -76,9 +85,35 @@ export default function SearchModal({ isOpen, onClose, allPosts }: SearchModalPr
   }, [selectedIndex]);
 
   useEffect(() => {
+    if (!isOpen) return;
+
     const handleGlobalKeyDown = (event: KeyboardEvent) => {
       if (event.key === 'Escape') {
         onClose();
+        return;
+      }
+
+      if (event.key === 'Tab' && modalRef.current) {
+        const focusables = modalRef.current.querySelectorAll<HTMLElement>(
+          'a[href], button:not([disabled]), textarea, input, select, [tabindex]:not([tabindex="-1"])'
+        );
+        if (focusables.length === 0) return;
+
+        const first = focusables[0];
+        const last = focusables[focusables.length - 1];
+        const active = document.activeElement as HTMLElement;
+
+        if (event.shiftKey) {
+          if (active === first || !modalRef.current.contains(active)) {
+            event.preventDefault();
+            last.focus();
+          }
+        } else {
+          if (active === last) {
+            event.preventDefault();
+            first.focus();
+          }
+        }
       }
     };
 
@@ -88,10 +123,8 @@ export default function SearchModal({ isOpen, onClose, allPosts }: SearchModalPr
       }
     };
 
-    if (isOpen) {
-      document.addEventListener('keydown', handleGlobalKeyDown);
-      document.addEventListener('mousedown', handleClickOutside);
-    }
+    document.addEventListener('keydown', handleGlobalKeyDown);
+    document.addEventListener('mousedown', handleClickOutside);
 
     return () => {
       document.removeEventListener('keydown', handleGlobalKeyDown);
@@ -101,56 +134,12 @@ export default function SearchModal({ isOpen, onClose, allPosts }: SearchModalPr
 
   if (!isOpen) return null;
 
-  const modalStyle: React.CSSProperties = {
-    position: 'fixed',
-    top: '50%',
-    left: '50%',
-    transform: 'translate(-50%, -50%)',
-    width: '90%',
-    maxWidth: '600px',
-    background: '#FAFAF8',
-    borderRadius: '8px',
-    boxShadow: '0 4px 20px rgba(0, 0, 0, 0.1)',
-    padding: '20px',
-    zIndex: 1000,
-    display: 'flex',
-    flexDirection: 'column',
-  };
-
-  const backdropStyle: React.CSSProperties = {
-    position: 'fixed',
-    top: 0,
-    left: 0,
-    width: '100%',
-    height: '100%',
-    background: 'rgba(0, 0, 0, 0.5)',
-    zIndex: 999,
-  };
-
-  const inputStyle: React.CSSProperties = {
-    width: '100%',
-    padding: '10px',
-    fontSize: '16px',
-    border: `1px solid ${isInputFocused ? '#df7500' : '#ccc'}`,
-    borderRadius: '4px',
-    marginBottom: '20px',
-    outline: 'none',
-  };
-
-  const resultsListStyle: React.CSSProperties = {
-    maxHeight: '400px',
-    overflowY: 'auto',
-    listStyleType: 'none',
-    padding: 0,
-    margin: 0,
-  };
-
   return (
     <>
-      <div style={backdropStyle} />
+      <div className={styles.backdrop} />
       <div
         ref={modalRef}
-        style={modalStyle}
+        className={styles.modal}
         role="dialog"
         aria-modal="true"
         aria-labelledby="search-modal-title"
@@ -167,24 +156,22 @@ export default function SearchModal({ isOpen, onClose, allPosts }: SearchModalPr
             setSelectedIndex(-1);
           }}
           onKeyDown={handleKeyDown}
-          style={inputStyle}
-          onFocus={() => setIsInputFocused(true)}
-          onBlur={() => setIsInputFocused(false)}
+          className={styles.searchInput}
           aria-label="Search articles and retrospectives"
           role="combobox"
           aria-expanded={filteredPosts.length > 0}
           aria-controls="search-modal-results"
           aria-activedescendant={activeDescendantId}
         />
-        <p className="meta" aria-live="polite" style={{ marginBottom: '10px' }}>
+        <p className={`meta ${styles.hint}`} aria-live="polite">
           {searchTerm.length === 0 ? 'Type to search' : `${filteredPosts.length} result${filteredPosts.length === 1 ? '' : 's'}`}
         </p>
-        <p className="meta" style={{ marginBottom: '12px' }}>
+        <p className={`meta ${styles.helper}`}>
           Use ↑ ↓ to move, Enter to open, Esc to close.
         </p>
-        <ul ref={resultsRef} id="search-modal-results" role="listbox" aria-label="Search results" style={resultsListStyle}>
+        <ul ref={resultsRef} id="search-modal-results" role="listbox" aria-label="Search results" className={styles.results}>
           {showNoResults && (
-            <li className="meta" style={{ padding: '8px', listStyle: 'none' }}>
+            <li className={`meta ${styles.empty}`}>
               No matching posts.
             </li>
           )}
@@ -194,17 +181,10 @@ export default function SearchModal({ isOpen, onClose, allPosts }: SearchModalPr
               id={`search-option-${index}`}
               role="option"
               aria-selected={index === selectedIndex}
-              style={{
-                marginBottom: '10px',
-                padding: '8px',
-                borderRadius: '4px',
-                backgroundColor: index === selectedIndex ? '#f0f0f0' : 'transparent',
-                transition: 'background-color 0.15s ease-in-out',
-                cursor: 'pointer',
-              }}
+              className={`${styles.resultItem} ${index === selectedIndex ? styles.resultItemActive : ''}`.trim()}
               onMouseEnter={() => setSelectedIndex(index)}
             >
-              <Link href={`/${type}/${id}`} onClick={onClose} style={{ textDecoration: 'none', color: '#333', display: 'block' }}>
+              <Link href={getContentHref(type, id)} onClick={onClose} className={styles.resultLink}>
                 {title}
               </Link>
               <small className="meta" style={{ display: 'block', marginTop: '4px' }}>

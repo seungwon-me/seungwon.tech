@@ -10,10 +10,13 @@
   /* Theme */
   --bg-color: #FAFAF8;
   --text-color: #1E1E1E;
-  --secondary-color: #555;
+  --secondary-color: #4f4f4f;
   --link-color: #0B5FFF;
   --focus-color: #DDD;
-  --heading-color: #df7500;
+  --heading-color: #c86500;
+  --text-muted: #4f4f4f;
+  --border-color: #d9d9d2;
+  --surface-color: #f2f2ee;
 }
 
 /* Base Styles */
@@ -188,7 +191,7 @@ article pre {
   background-color: #f4f4f4;
   padding: 1rem;
   border-radius: 8px;
-  border: 1px solid #e3e3df;
+  border: 1px solid var(--border-color);
   margin: 24px 0;
   box-shadow: 0 1px 0 rgba(0, 0, 0, 0.04);
 }
@@ -252,7 +255,7 @@ article table {
 
 article th,
 article td {
-  border-bottom: 1px solid #e3e3df;
+  border-bottom: 1px solid var(--border-color);
   padding: 8px 10px;
   text-align: left;
 }
@@ -270,7 +273,7 @@ article img {
   max-width: 100%;
   height: auto;
   margin: 20px auto;
-  border: 1px solid #ecece7;
+  border: 1px solid var(--border-color);
   border-radius: 8px;
 }
 
@@ -286,6 +289,26 @@ article img {
   position: relative;
   display: inline-flex;
   align-items: center;
+}
+
+.list-select {
+  border: 1px solid var(--border-color);
+  background: #fff;
+  border-radius: 6px;
+  padding: 2px 8px;
+  font: inherit;
+  color: var(--text-color);
+}
+
+.list-select:focus-visible {
+  outline: 2px solid var(--focus-color);
+  outline-offset: 2px;
+}
+
+.list-label {
+  font-family: var(--font-sans);
+  font-size: 0.9rem;
+  color: var(--secondary-color);
 }
 
 .list-sort-toggle {
@@ -352,7 +375,7 @@ article img {
 }
 
 .content-link {
-  color: gray;
+  color: var(--secondary-color);
   text-decoration: none;
   line-height: 1.45;
 }
@@ -382,7 +405,7 @@ article img {
 }
 
 .more-link {
-  color: gray;
+  color: var(--secondary-color);
   text-decoration: none;
   font-weight: 700;
 }
@@ -438,7 +461,27 @@ article img {
     margin-bottom: 14px;
   }
 
-  .list-sort-toggle {
+  .list-select {
+  border: 1px solid var(--border-color);
+  background: #fff;
+  border-radius: 6px;
+  padding: 2px 8px;
+  font: inherit;
+  color: var(--text-color);
+}
+
+.list-select:focus-visible {
+  outline: 2px solid var(--focus-color);
+  outline-offset: 2px;
+}
+
+.list-label {
+  font-family: var(--font-sans);
+  font-size: 0.9rem;
+  color: var(--secondary-color);
+}
+
+.list-sort-toggle {
     min-height: 32px;
     padding: 0 4px;
   }

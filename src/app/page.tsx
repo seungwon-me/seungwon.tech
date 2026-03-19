@@ -1,9 +1,10 @@
 import Link from 'next/link';
 import { getSortedPostsData } from '@/lib/posts';
+import { getContentHref } from '@/lib/contentRoute';
 
 export default function Home() {
-  const latestPosts = getSortedPostsData('posts').map(p => ({ ...p, type: 'posts' }));
-  const latestRetrospectives = getSortedPostsData('retrospectives').map(r => ({ ...r, type: 'retrospectives' }));
+  const latestPosts = getSortedPostsData('posts').map(p => ({ ...p, type: 'posts' as const }));
+  const latestRetrospectives = getSortedPostsData('retrospectives').map(r => ({ ...r, type: 'retrospectives' as const }));
 
   const allContent = [...latestPosts, ...latestRetrospectives]
     .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
@@ -20,7 +21,7 @@ export default function Home() {
       <ul className="content-list">
         {allContent.map(({ id, date, title, type }) => (
           <li key={id} className="content-item">
-            <Link href={`/${type}/${id}`} className="content-link">
+            <Link href={getContentHref(type, id)} className="content-link">
               {title}
             </Link>
             <br />
